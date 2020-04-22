@@ -23,7 +23,7 @@
 %\usepackage[authoryear,longnamesfirst]{natbib}
 %\usepackage[authoryear]{natbib}
 \usepackage[numbers]{natbib}
-
+\usepackage{listings}
 
 %%%Author definitions
 \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
@@ -56,26 +56,32 @@
 \ead{samier.barguil@estudiante.uam.es}
 \cormark[1]
 
-\author[4]{Cristyan Manta-Caro}[bioid=4]
+\author[4]{Cristyan Manta-Caro}[bioid=2]
 \ead{cristyan.manta@wipro.com}
 
-\author[4]{Cristian Rosero-Carvajal}[bioid=4]
+\author[4]{Cristian Rosero-Carvajal}[bioid=3]
 \ead{cristian.carvajal@wipro.com}
 
-\author[2]{Victor Lopez Alvarez}[bioid=2]
+\author[2]{Victor Lopez Alvarez}[bioid=4]
 \ead{victor.lopezalvarez@telefonica.com}
 
-\author[2]{Arturo Mayoral Lopez De Lerma}[bioid=6]
+\author[2]{Arturo Mayoral Lopez De Lerma}[bioid=5]
 \ead{arturo.mayoral@telefonica.com}
 
-\author[2]{Oscar Gonzalez De Dios}[bioid=5]
+\author[2]{Oscar Gonzalez De Dios}[bioid=6]
 \ead{oscar.gonzalezdedios@telefonica.com}
 
-\author[3]{Edward Echeverry}[bioid=3]
+\author[3]{Edward Echeverry}[bioid=7]
 \ead{edward.echeverry@telefonica.com}
 
-\author[2]{Juan Pedro Fernandez-Palacios}[bioid=4]
+\author[2]{Juan Pedro Fernandez-Palacios}[bioid=8]
 \ead{juanpedro.fernandez-palaciosgimenez@telefonica.com}
+
+\author[5]{Zdravko Stevkovski}[bioid=9]
+\ead{zstevkovski@infinera.com}
+
+\author[5]{Jutta Kemppainen}[bioid=10]
+\ead{jkemppainen@infinera.com}
 
 
 \address[1]{Universidad Autonoma de Madrid, Madrid, Spain}
@@ -83,6 +89,7 @@
 \address[3]{Telefonica Movistar, Transversal 60 No 114ª -55. Bogotá, Colombia}
 \address[4]{Wipro Technologies Ltd., Doddakannelli, Sarjapur Road
 Bengaluru - 560 035, India}
+\address[5]{Infinera Corporation, 140 Caspian Court, Sunnyvale, CA 94089, USA}
 
 \cortext[cor1]{Corresponding author}
 
@@ -267,6 +274,7 @@ Operation, configuration and maintenance activities are performed manually and s
 
 This reality has fostered the standardization of a common framework [15] for definition of a unified and standard control plane for microwave systems, pursuing as objective the multi-vendor interworking, multi-layer control, and network-wide coordination.
 For practical SDN deployments in this technical domain the ONF has released a standard model published as TR-532 document [16], with the support of the wide community of MW system manufacturers. A number of PoCs have served as validation steps of the viability of the model, as well as helping to refine it and to prepare the industry for this evolution. This is the data model adopted by Telefonica in the iFUSION architecture.
+
 The proposed model is aligned with the view of the SDN Domain Controller as a vendor-agnostic configurator of the MW network. It leaves the service definition to upper applications which need to provide the intelligence to deploy and manage end-to-end services, by configuring every device involved individually through the SDN controller.
 
 Interestingly, one of the outcomes of these PoC has been the definition of a Mediator, in principle devoted to experiment with the model, but later on identified as a mean of integrating legacy MW systems with an evolved SDN-based deployment, then protecting investments and ensuring smooth transition towards SDN.  
@@ -290,6 +298,15 @@ On the SBI of the SDTN, each technology Transport Domain SDN Controller shall ex
 \subsection{IP Network Models}
 
 \subsubsection{L3NM}
+
+The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rosen2006rfc} provides a multipoint, routed service to the customer over an IP/MPLS core. The L3VPNs are widely used to deploy 3G/4G, fixed and enterprise services principally due to the fact that not only several traffic discrimination policies can be applied to transport and guarantee SLAs across the network but also because several stitching methodologies can be applied to combine access and transport services. 
+
+Some service models has been defined and standardized until now. L3SM \cite{wulitkowski} is a Customer Service Model that describes the requirements of a L3VPN service from the point of view of the customer. It defines a YANG data model that can be used in the communication between customers and network operators. 
+
+L3NM is a Service Network Model \cite{voyer2019internet}. The L3NM YANG model is exposed by network controllers to manage and control the VPN Service configuration. The model describes a VPN Service in the service provider network. It contains information of the service provider network such as NE-ID and Interfaces-ID and might include allocated resources such as the Route Targets and Route Distinguishers.
+
+The L3NM model is Network Centric, it is focused on the service provider internal network parameters. The data model can be used to facilitate communication between the service orchestrator and the SDTN network controller. Also, the SDTN network controller can further include network specific information in the service request (i.e. transport LSP binding, Router Targets assignation, routing profiles or encryption). In addition, it facilitates multi-domain orchestration, where logical resources (such as route targets or route distinguishers) must be synchronized between domains.
+The L3NM model does not keep any of the commercial customer parameters, which belong to the OSS/BSS layer.
 
 \subsubsection{L2NM}
 
@@ -341,8 +358,41 @@ The interface between the SDTN and SDN-C shall integrate only mandatory informat
 \end{figure}
 
 \subsubsection{Multi-layer Topology}
-The multi-layer topology use case is based on the perspectives provided by all the IP and Optical WDM/OTN SDN-C. The scope of it, includes multiple domains within the same network, where each SDN-C will export its IETF context or T-API context, correspondingly. Use case is built upon the ONF T-API \footnote{https://wiki.opennetworking.org/display/OTCC/TAPI} Topology module and Connectivity Service module for L2-L0 Optical side, IETF implementations, specifically IETF RFC8345 \cite{rfc8345} as basis for the generic network model, and a reduced version of YANG Data Model for Traffic Engineering 
-in \cite{ietf-teas-yang-te-topo-22} for L1 IP topology augmenting the generic model. We have built a new model putting all together following the best practices defined in previous work in the topic. In order to provide an explicit multi-layer topology representation of the whole network for all its layers. 
+The multi-layer topology use case is based on the perspectives provided by all the IP and Optical WDM/OTN SDN-Cs. The scope of it, includes multiple domains within the same network, where each SDN-C will export its IETF context or T-API context, correspondingly. Use case is built upon the ONF T-API \footnote{https://wiki.opennetworking.org/display/OTCC/TAPI} Topology module and Connectivity Service module for L2-L0 Optical side, IETF implementations, specifically IETF RFC8345 \cite{rfc8345} as basis for the generic network model, and a reduced version of YANG Data Model for Traffic Engineering in \cite{ietf-teas-yang-te-topo-22} for L1 IP topology augmenting the generic model. We have built a new model putting all together following the best practices defined in previous works in the topic. In order to provide an explicit multi-layer topology representation of the whole network for all its layers. 
+
+A multi-layer multi-domain topology abstraction unified view is required for vendor-agnostic integration on Service Providers systems. We propose to create a unique topology based on the T-API Topology and IETF Topology Flat Abstraction models which collapses all layers. A key element to achieved that, it is the usage of a correlation plug-id concept, to join the IP and Optical layers. Due to there is no a dynamic protocol or common element between the ONF/IETF standards that would allow their correlation. 
+
+There are some pre-requisites to build the multi-layer topology and those are:
+\begin{itemize}
+    \item The context of the optical layer topology MUST already be known by the SDTN controller.
+    \item The context of optical services MUST be known by the SDTN controller.
+    \item The context of the IP layer topology MUST be already known by the SDTN controller.
+\end{itemize}
+
+The SBI for this use case base in the IP part representation is supported on the RFC8345. In this RFC, a basic network representation is done using an abstract network model (“ietf-network”) with the set of parameters described in the (4.1.3 subsection). These parameters are common for all the networks described in this document (L1, L2, L3, and UNI), by means of augmentation.  
+
+Our detail proposal as follows: 
+
+In the RFC8345 (generic network) it’s considered to use the supporting-termination-point through the
+\\ \textit{ietf-network:termination-point={tp-id}} attribute.
+
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+/nw:networks/nw:network/nw:node:
+    +--rw termination-point* [tp-id]
+    +--rw tp-id 
+    +--rw supporting-termination-point
+       +--rw network-ref
+       +--rw node-ref
+       +--rw tp-ref
+\end{lstlisting}
+
+Where the supporting-termination-point represents another termination point in an underlay network. Considering this, the list of attributes will show the next information: 
+\begin{itemize}
+    \item The \textit{network-ref} references an underlay network, where the supporting Network for this case specifically must be \textbf{l1-topology}.
+    \item \textit{Node-ref} represents a node in an underlay network, where the supporting node name must be the node-id in the \textbf{l1-topology}.
+    \item \textit{Tp-ref} references the underlay terminal point itself. The supporting termination point must be \textit{tp-id} in the in the \textbf{l1-topology}.
+\end{itemize}
+
 
 Finally, for the construction of the multi-layer topology, it is necessary to perform the process by layers satisfying the prerequisites, in which the SDTN will perform the task of correlating the values that until now will be filled manually in the plug-id attributes in IP and Optical layers. The process proposed is depicted as workflow in Fig. ~\ref{FIG:topology_workflow}.
 
@@ -356,9 +406,16 @@ Finally, for the construction of the multi-layer topology, it is necessary to pe
 
 \begin{figure*}
 	\centering
-		\includegraphics[scale=1]{figs/field_trial_environment.pdf}
-	\caption{Network Plane of the Field Trial Environment for Testing and Evaluation}
-	\label{FIG:field_trial}
+		\includegraphics[scale=1]{figs/field_trial_environment_ip.pdf}
+	\caption{Network Plane of the Field Trial Environment for IP/MPLS Testing and Evaluation}
+	\label{FIG:field_trial_ip}
+\end{figure*}
+
+\begin{figure*}
+	\centering
+		\includegraphics[scale=1]{figs/field_trial_environment_optical.pdf}
+	\caption{Network Plane of the Field Trial Environment for Optical/WDM Testing and Evaluation}
+	\label{FIG:field_trial_optical}
 \end{figure*}
 
 \section{Field Trial Environment for iFusion SDTN Demonstration}
@@ -367,6 +424,8 @@ Finally, for the construction of the multi-layer topology, it is necessary to pe
 We have deployed a field trial environment for demonstrating, testing and evaluating the end-to-end multi-domain cases and the SDN-based iFusion Architecture. We describe the two main layers which compose the field trial. Fistly, a \textit{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \textit{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
 
 \subsection{Control Layer}
+A hierarchical SDTN architecture is built upon the reference design guidelines described in Section 2. Infinera Trascend Maestro\footnote{https://www.infinera.com/solutions/intelligent-automation/}, acting as SDTN controller, orchestrates four (4) SDN-C one for each domain.  
+
 
 \subsection{Network Layer}
 We use a scale representation in terms of quantity of equipment but a full network field trial with all the hierarchical layers that compose a Service Provider real deployment. In our notation and architecture the IP/MPLS-base network is comprised of five (5) layer with the following responsibilities: 
@@ -378,9 +437,9 @@ We use a scale representation in terms of quantity of equipment but a full netwo
     \item HL5: Provides connectivity access to corporations, enterprises, small businesses and mobile terminal nodes (BTS, NodeB, eNodeB) in remote areas. Formerly known as cell site routers in Mobile Service Providers, but now evolved and converged to serve multiple fixed plus mobile segments.     
 \end{itemize}
 
-Four (4) IP/MPLS-based network links are transported by a two-vendor WDM underlying infrastructure. Fig. ~\ref{FIG:field_trial} depicts in purple the four interlinks 2x100Gb and 2x10Gb.  
+Four (4) IP/MPLS-based network links are transported by a two-vendor WDM underlying infrastructure. Fig. ~\ref{FIG:field_trial_ip} depicts in purple the four interlinks 2x100Gb and 2x10Gb.  
 
-
+Regarding the optical transport infrastructure, we have built a dual-plane independent metropolitan WDM networks. Comprised of a ring of (4) four nodes each with nx100Gb and nx10Gb lambda capacity. Fig. ~\ref{FIG:field_trial_ip} illustrates the optical WDM part of the field trial enviroment.
 
 
 \section{Results  - TEF COL}
