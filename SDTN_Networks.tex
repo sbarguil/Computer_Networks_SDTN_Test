@@ -153,9 +153,14 @@ This paper is structured as follows. Section \ref{section:arq} describes the iFu
 \section{SDN Architecture}
 \label{section:arq}
 
-iFUSION is a reference model architecture permeating the separation of concerns for both network and service layers. The proposed architecture can be shown in terms of components and relationship among them, as depicted in \ref{FIG:1}. 
+\uppercase{iFUSION} is a reference model architecture defined to support network automation and programability in service provider environment. iFUSION defines a clear separation between network and service layers. The proposed architecture can be shown in terms of components and relationship among them, as depicted in \ref{FIG:1}. 
 
-iFUSION proposes the use of standard North bound interfaces leveraging on \uppercase{RESTconf/YANG} and standard data models based on latest developments in \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig} organizations.
+The \uppercase{iFUSION} main principles include the use of:
+\begin{itemize}
+    \item Standard North bound interfaces (NBI) leveraging on \uppercase{RESTconf/YANG}
+    \item Standard Configuration South bound interfaces (SBI) leveraging on \uppercase{NETCONF/YANG}
+    \item YANG data models based on latest developments in the standards-development organizations (SDOs): \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig}.
+\end{itemize}
 
 \begin{figure*}
 	\centering
@@ -182,54 +187,37 @@ The key elements of the SDN iFUSION architecture are the following:
 \item \textbf{Service SDN controller}: An additional SDN layer that takes into account services might be needed. 
 \end{itemize}
 
-As of today, one single SDN implementation does not fit the entire network. An End-to-End SDN Controller for the whole Network layer is not perceived as feasible due to technological and operational issues. Short and medium term scenarios will be conformed by a set of Domain Controllers, each one per network segment (SDN Domain). 
-
 The iFUSION architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP}, \hyperref[section:mw]{Microwave} for wireless transport, and \hyperref[section:dwdm]{Optical} for transmission. 
 
 The Software Defined Transport Network (SDTN) Controller is responsible to orchestrate the respective SDN Domain controllers within the transport segment (IP, Optical and MW) through the Domain Controllers\'NBI, providing an end-to-end transport network vision. The SDTN Controller aggregates demands from the management and services layer exposing a unified NBI which should provide resource configuration abstraction and technology agnostic service definition. 
 
-The SDTN entails two main building blocks: 
+The SDTN entails the following functions: 
 \begin{enumerate}
-    \item End-to-end Transport Network Control 
+    \item End-to-end service binding and mapping.
     \item End-to-end Transport Service Abstraction.
+    \item End-to-end resource/topology discovery and composition.
+    \item End-to-end resource visualization.
 \end{enumerate}
 
 The SDN Domain controllers, on the other hand, are in charge of all the devices in the domain. Each SDN Domain controller unifies the device configuration interface and provides vendor-agnostic network configuration, monitoring and resource discovery. Besides, the Domain Controller exposes high-level network services abstraction to OSS and BSS layers through its North Bound Interface (NBI). Therefore, the abstraction of device specific configuration from network service definition is one of the main features that the SDN controller implements. Moreover, the SDN Domain Controllers entail the function of Path Computation Element to manage and optimize traffic engineering in the domain.
 
-The specific SDN requirements and implementations vary depending on the network environment it is applied to:
-
-\begin{itemize}
-
-\item Different network equipment to control:
-\begin{itemize}
-    \item IP/MPLS routers or  DC switches 
-    \item OpenFlow switches
-    \item OTN nodes
-    \item ROADMs, Microwave devices
-    \item CPEs
-\end{itemize}
-
-\item Different technical realizations (physical elements vs. virtual elements) 
-
-\item Different services to configure and control (VPNs, tunnels, optical paths, Layer 2 services, Layer3 services, overlay service tunnels,\dots)
-SDN technology is also the base of internal connectivity inside the virtual infrastructure domains, as the case of UNICA, the virtualization infrastructure for Telefonica\ref{}. Some mechanisms to coordinate with the Transport SDN will be required. The interaction will be done at a horizontal level between the WIM (Wide area Network Infrastructure Manager) and the Transport Controller\ref{}.
-The following sections described in detail the approach followed per technological domain.
-\end{itemize}
-
 \subsection {IP domain}
 \label{section:ip}
 IP networks are deployed following a hierarchical model, mixing equipment from different vendors. The IP boxes are interoperable at data plane level and control plane level (e.g. routing protocols such as IS-IS, OSPF or BGP). Due to scalability reasons, the IP networks are typically subdivided in IP domains, so the routing and control protocols are confined to their respective domains.
+
 The foreseen SDN solution for IP segment is based on a single, multi-vendor IP SDN Domain Controller in charge of configuring the IP network elements, as shown in \ref{FIG:2}.
 
 \begin{figure*}
 	\centering
-		\includegraphics[scale=1]{figs/ifusion_multidomain.png}
+		\includegraphics[scale=1]{figs/ifusion_multidomain_2.png}
 	\caption{Single multi-vendor IP SDN Domain Controller deployment}
 	\label{FIG:2}
 \end{figure*}
 
-The target SBI for vendor agnostic device configuration shall be compliant with NETCONF [8] standard protocol. The  set of device configuration data models (SBI) for the IP segment is still under definition but shall be defined in YANG  [9] modelling language, while it could be inherit or complemented from/by other alternative modelling tools, such UML, to help its definition.
+The target SBI for vendor agnostic device configuration shall be compliant with NETCONF \cite{enns2011network} standard protocol. The  set of device configuration data models (SBI) for the IP segment is still under definition but shall be defined in YANG \cite{bjorklund2016yang} modelling language, while it could be inherit or complemented from/by other alternative modelling tools, such UML, to help its definition.
+
 From the implementation perspective, it is assumed that devices might not natively support the data models selected, and thus a mediation layer could be required to be implemented between the controller and the devices. Such a mediation layer would be considered as an interim solution and, if present, shall be transparent without impacting on the performance and capabilities of the defined interface. 
+
 Additionally to pure device configuration, the IP SDN Domain controller shall perform Traffic Engineering and Path Computation. With that purpose, some standard and mature control protocols such PCEP and BGP-LS for MPLS networks, shall be implemented to complete the definition of the SBI. As a result, Telefonica expects that the IP SDN controller will assume the control/management of:
 \begin{itemize}
 \item Device configuration of interfaces (VLANs) and routing protocols (BGP, ISIS…)
@@ -237,7 +225,7 @@ Additionally to pure device configuration, the IP SDN Domain controller shall pe
 \item Overlay networks services (L2/L3 VPNs) device configuration (VRFs,\dots)
 \end{itemize}
 
-The IP SDN Domain controller will be the main entry point to the network elements, to avoid overloading the elements and providing a coherent view. The NBI of the controller will also be based on standard models defined in YANG and implemented either on NETCONF or on its lightweight version RESTCONF [10] with XML/JSON encoding. The NBI shall provide to higher entities within the SDN hierarchy:
+The IP SDN Domain controller will be the main entry point to the network elements, to avoid overloading the elements and providing a coherent view. The NBI of the controller will also be based on standard models defined in YANG and implemented either on NETCONF or on its lightweight version RESTCONF \cite{bierman2017restconf} with XML/JSON encoding. The NBI shall provide to higher entities within the SDN hierarchy:
 \begin{itemize}
 \item Device inventory information.
 \item A layered topology view (L2/L3, MPLS) of its controlled network entities.
@@ -301,16 +289,41 @@ On the SBI of the SDTN, each technology Transport Domain SDN Controller shall ex
 
 The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rosen2006rfc} provides a multipoint, routed service to the customer over an IP/MPLS core. The L3VPNs are widely used to deploy 3G/4G, fixed and enterprise services principally due to the fact that not only several traffic discrimination policies can be applied to transport and guarantee SLAs across the network but also because several stitching methodologies can be applied to combine access and transport services. 
 
-Some service models has been defined and standardized until now. L3SM \cite{wulitkowski} is a Customer Service Model that describes the requirements of a L3VPN service from the point of view of the customer. It defines a YANG data model that can be used in the communication between customers and network operators. 
+Some service models has been defined and standardized until now. L3SM \cite{rfc8299} is a Customer Service Model that describes the requirements of a L3VPN service from the point of view of the customer. It defines a YANG data model that can be used in the communication between customers and network operators. 
 
 L3NM is a Service Network Model \cite{voyer2019internet}. The L3NM YANG model is exposed by network controllers to manage and control the VPN Service configuration. The model describes a VPN Service in the service provider network. It contains information of the service provider network such as NE-ID and Interfaces-ID and might include allocated resources such as the Route Targets and Route Distinguishers.
 
 The L3NM model is Network Centric, it is focused on the service provider internal network parameters. The data model can be used to facilitate communication between the service orchestrator and the SDTN network controller. Also, the SDTN network controller can further include network specific information in the service request (i.e. transport LSP binding, Router Targets assignation, routing profiles or encryption). In addition, it facilitates multi-domain orchestration, where logical resources (such as route targets or route distinguishers) must be synchronized between domains.
 The L3NM model does not keep any of the commercial customer parameters, which belong to the OSS/BSS layer.
 
+\begin{figure}
+	\centering
+		\includegraphics[scale=0.35]{figs/L3NM.png}
+	\caption{L3NM Data model structure}
+	\label{FIG:l3nm}
+\end{figure}
+
+\begin{lstlisting}[basicstyle=\ttfamily\small,label=l3nm,caption=L3NM Yang Structure]
+module: ietf-l3vpn-ntw
+ +--rw l3vpn-ntw
+  +--rw vpn-profiles
+  |  ...
+  +--rw vpn-services
+   +--rw vpn-service* [vpn-id]
+      +--rw vpn-id                  l3vpn-svc:svc-id
+      +  ...
+       +--rw vpn-node* [ne-id]
+          +--rw ne-id                      string
+          + ...
+          +--rw vpn-network-accesses
+          |  +--rw vpn-network-access* [id]
+\end{lstlisting}
+
 \subsubsection{L2NM}
 
 \subsubsection{Network Topology}
+
+The proposed control architecture relies on providing different levels of abstraction for each control layer. Therefore, the needs in terms of topology and knowledge of the service provider network differ among components.
 
 \subsection{Optical Network Model - TEF gCTIO}
 
@@ -376,7 +389,7 @@ Our detail proposal as follows:
 In the RFC8345 (generic network) it’s considered to use the supporting-termination-point through the
 \\ \textit{ietf-network:termination-point={tp-id}} attribute.
 
-\begin{lstlisting}[basicstyle=\ttfamily\small]
+\begin{lstlisting}[basicstyle=\ttfamily\small,label=tps,caption=Supporting termination point Structure]
 /nw:networks/nw:network/nw:node:
     +--rw termination-point* [tp-id]
     +--rw tp-id 
@@ -424,8 +437,8 @@ Finally, for the construction of the multi-layer topology, it is necessary to pe
 We have deployed a field trial environment for demonstrating, testing and evaluating the end-to-end multi-domain cases and the SDN-based iFusion Architecture. We describe the two main layers which compose the field trial. Fistly, a \textit{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \textit{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
 
 \subsection{Control Layer}
-A hierarchical SDTN architecture is built upon the reference design guidelines described in Section 2. Infinera Trascend Maestro\footnote{https://www.infinera.com/solutions/intelligent-automation/}, acting as SDTN controller, orchestrates four (4) SDN-C one for each domain.  
-
+A hierarchical SDTN architecture is built upon the reference design guidelines described in Section 2. Infinera Trascend Maestro\footnote{https://www.infinera.com/solutions/intelligent-automation/}, acting as SDTN controller, orchestrates four (4) SDN-C one for each domain.
+From the IP control perspective, SDN-Cs communicate with NEs via NETCONF/YANG with the OpenConfig data models and RESTconf with SDTN. As explained in Section 4.3.1, we have extended the end-to-end signalling building a seamless MPLS multi-domain IP/MPLS network. In other hand, from the Optical perspective, SDN-Cs follow a similar integration. At SBI, OpenROADM + OPenConfig models are used on top of NETconf/YANG protocol. At NBI, a T-API implementation is used.  
 
 \subsection{Network Layer}
 We use a scale representation in terms of quantity of equipment but a full network field trial with all the hierarchical layers that compose a Service Provider real deployment. In our notation and architecture the IP/MPLS-base network is comprised of five (5) layer with the following responsibilities: 
@@ -456,22 +469,10 @@ Con las trazas sería suficiente podemos elaborarlo luego.
 \section{Conclusions}
 \label{section:conclusions}
 
-\section{Bibliography}
-
-
-
-\appendix
-\section{My Appendix}
-Appendix sections are coded under \verb+\appendix+.
-
-\verb+\printcredits+ command is used after appendix sections to list 
-author credit taxonomy contribution roles tagged using \verb+\credit+ 
-in frontmatter.
-
 \printcredits
 
 %% Loading bibliography style file
-% \bibliographystyle{model1-num-names}
+%\bibliographystyle{model1-num-names}
 \bibliographystyle{cas-model2-names}
 
 % Loading bibliography database
