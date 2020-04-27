@@ -293,12 +293,12 @@ L3NM is a Service Network Model \cite{voyer2019internet}. The L3NM YANG model is
 The L3NM model is Network Centric, it is focused on the service provider internal network parameters. The data model can be used to facilitate communication between the service orchestrator and the SDTN network controller. Also, the SDTN network controller can further include network specific information in the service request (i.e. transport LSP binding, Router Targets assignation, routing profiles or encryption). In addition, it facilitates multi-domain orchestration, where logical resources (such as route targets or route distinguishers) must be synchronized between domains.
 The L3NM model does not keep any of the commercial customer parameters, which belong to the OSS/BSS layer.
 
-\begin{figure}
+\begin{figure*}
 	\centering
 		\includegraphics[scale=0.35]{figs/L3NM_L2NM.png}
 	\caption{L3NM Data model structure}
-	\label{FIG:l3nm}
-\end{figure}
+	\label{FIG:l3nm} 
+\end{figure*}
 
 %\begin{lstlisting}[basicstyle=\ttfamily\small,label=l3nm,caption=L3NM Yang %Structure]
 %module: ietf-l3vpn-ntw
