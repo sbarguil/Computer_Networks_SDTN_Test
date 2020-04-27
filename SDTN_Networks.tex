@@ -157,9 +157,9 @@ This paper is structured as follows. Section \ref{section:arq} describes the iFu
 
 The \uppercase{iFUSION} main principles include the use of:
 \begin{itemize}
-    \item Standard North bound interfaces (NBI) leveraging on \uppercase{RESTconf/YANG}
-    \item Standard Configuration South bound interfaces (SBI) leveraging on \uppercase{NETCONF/YANG}
-    \item YANG data models based on latest developments in the standards-development organizations (SDOs): \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig}.
+    \item Standard North bound interfaces (NBI) leveraging on \uppercase{RESTconf/YANG} \cite{bierman2017restconf}.
+    \item Standard Configuration South bound interfaces (SBI) leveraging on \uppercase{NETCONF/YANG} \cite{enns2011network}.
+    \item YANG data models based on latest developments in the standards-development organizations (SDOs) \cite{bjorklund2016yang}: \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig}.
 \end{itemize}
 
 \begin{figure*}
@@ -203,7 +203,7 @@ The SDN Domain controllers, on the other hand, are in charge of all the devices 
 
 \subsection {IP domain}
 \label{section:ip}
-IP networks are deployed following a hierarchical model, mixing equipment from different vendors. The IP boxes are interoperable at data plane level and control plane level (e.g. routing protocols such as IS-IS, OSPF or BGP). Due to scalability reasons, the IP networks are typically subdivided in IP domains, so the routing and control protocols are confined to their respective domains.
+IP networks are deployed following a hierarchical model, mixing equipment from different vendors. The IP boxes are interoperable at data plane level and control plane level (e.g. routing protocols such as IS-IS, OSPF or BGP). Due to scalability reasons, the IP networks are typically subdivided in IP domains, so the routing and control protocols are confined to their administrative domain.
 
 The foreseen SDN solution for IP segment is based on a single, multi-vendor IP SDN Domain Controller in charge of configuring the IP network elements, as shown in \ref{FIG:2}.
 
@@ -214,25 +214,22 @@ The foreseen SDN solution for IP segment is based on a single, multi-vendor IP S
 	\label{FIG:2}
 \end{figure*}
 
-The target SBI for vendor agnostic device configuration shall be compliant with NETCONF \cite{enns2011network} standard protocol. The  set of device configuration data models (SBI) for the IP segment is still under definition but shall be defined in YANG \cite{bjorklund2016yang} modelling language, while it could be inherit or complemented from/by other alternative modelling tools, such UML, to help its definition.
+The target SBI for vendor agnostic device configuration shall be compliant with NETCONF standard protocol. The  set of device configuration data models (SBI) arethe ones defined in OpenConfig \cite{}.
 
-From the implementation perspective, it is assumed that devices might not natively support the data models selected, and thus a mediation layer could be required to be implemented between the controller and the devices. Such a mediation layer would be considered as an interim solution and, if present, shall be transparent without impacting on the performance and capabilities of the defined interface. 
-
-Additionally to pure device configuration, the IP SDN Domain controller shall perform Traffic Engineering and Path Computation. With that purpose, some standard and mature control protocols such PCEP and BGP-LS for MPLS networks, shall be implemented to complete the definition of the SBI. As a result, Telefonica expects that the IP SDN controller will assume the control/management of:
+The IP SDN Domain controller shall perform Traffic Engineering and Path Computation. With that purpose, some standard and mature control protocols such PCEP and BGP-LS for MPLS networks, shall be implemented to complete the definition of the SBI. As a result, Telefonica expects that the IP SDN controller will assume the control/management of:
 \begin{itemize}
 \item Device configuration of interfaces (VLANs) and routing protocols (BGP, ISIS…)
 \item Traffic Engineering of MPLS tunnels (LSPs). 
 \item Overlay networks services (L2/L3 VPNs) device configuration (VRFs,\dots)
 \end{itemize}
 
-The IP SDN Domain controller will be the main entry point to the network elements, to avoid overloading the elements and providing a coherent view. The NBI of the controller will also be based on standard models defined in YANG and implemented either on NETCONF or on its lightweight version RESTCONF \cite{bierman2017restconf} with XML/JSON encoding. The NBI shall provide to higher entities within the SDN hierarchy:
+The IP SDN Domain controller will be the main entry point to the network elements, to avoid overloading the elements and providing a coherent view. The NBI of the controller will also be based on standard models defined in YANG and implemented either on NETCONF or on its lightweight version RESTCONF with XML/JSON encoding. The NBI shall provide to higher entities within the SDN hierarchy:
 \begin{itemize}
 \item Device inventory information.
 \item A layered topology view (L2/L3, MPLS) of its controlled network entities.
 \item LSPs provisioning and path computation.
 \item Device abstraction for network services towards the SDTN Controller, i.e., for overlay services VPNs (L2, L3)
 \item Network state and performance monitoring information of the IP domain. 
-Apart from the previous network segments, SDN will also be introduced in other network environments related with Virtualization and the evolution of the Central Offices.
 \end{itemize}
 
 \subsection{Optical domain}
@@ -243,7 +240,7 @@ Without line-side interoperability of the different WDM transceivers and Reconfi
 
 With this in mind, in the short term, Optical SDN controllers are expected to provide network programmability and interoperability towards upper layers (multi-layer) and between vendors (multi-domain, multi-vendor) through the support of standard NBIs (i.e. coordination will be provided by upper layer hierarchical SDN controller). This short term approach will enable the setup and tear down of connections in optical channels (OCh and ODU layers), the discovery the network resources to compose a layered uniform view based on the OTN hierarchy, and the monitoring of the optical network. 
 
-The SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has been already deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, beneficing the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) [11] and IETF models [12] are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
+The SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has been already deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, beneficing the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) \cite{lopez2016transport} and IETF models \cite{wu2017service} are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
 iFUSION relays on ONF Transport API 2.0 as as the reference NBI for the SDN implementation in the optical transport segment, having been experimented in several proof of concepts [15]. 
 
 In the medium and long term, the direct programmability of the components can have interest in Point-To-Point, Metro and Regional scenarios, where disaggregation of optical transceivers and line side components can play an important role. In this line, OpenROADM [12] and OpenConfig [13] projects have already defined device configuration models for transponders and open line systems. Telefonica is approaching this transformation of the optical control in two phases:
@@ -298,28 +295,35 @@ The L3NM model does not keep any of the commercial customer parameters, which be
 
 \begin{figure}
 	\centering
-		\includegraphics[scale=0.35]{figs/L3NM.png}
+		\includegraphics[scale=0.35]{figs/L3NM_L2NM.png}
 	\caption{L3NM Data model structure}
 	\label{FIG:l3nm}
 \end{figure}
 
-\begin{lstlisting}[basicstyle=\ttfamily\small,label=l3nm,caption=L3NM Yang Structure]
-module: ietf-l3vpn-ntw
- +--rw l3vpn-ntw
-  +--rw vpn-profiles
-  |  ...
-  +--rw vpn-services
-   +--rw vpn-service* [vpn-id]
-      +--rw vpn-id                  l3vpn-svc:svc-id
-      +  ...
-       +--rw vpn-node* [ne-id]
-          +--rw ne-id                      string
-          + ...
-          +--rw vpn-network-accesses
-          |  +--rw vpn-network-access* [id]
-\end{lstlisting}
+%\begin{lstlisting}[basicstyle=\ttfamily\small,label=l3nm,caption=L3NM Yang %Structure]
+%module: ietf-l3vpn-ntw
+% +--rw l3vpn-ntw
+%  +--rw vpn-profiles
+%  |  ...
+%  +--rw vpn-services
+%   +--rw vpn-service* [vpn-id]
+%      +--rw vpn-id                  l3vpn-svc:svc-id
+%      +  ...
+%       +--rw vpn-node* [ne-id]
+%          +--rw ne-id                      string
+%          + ...
+%          +--rw vpn-network-accesses
+%          |  +--rw vpn-network-access* [id]
+%\end{lstlisting}
 
-\subsubsection{L2NM}
+\subsubsection{L2SM}
+
+L2 services belongs to the class of IP virtual leased line services (VLLs) or virtual private LAN services (VPLS)\cite{andersson2006framework}, which are a fundamental part of the service portfolio offered by SPs. 
+VLLs and VPLS can be generally described as point-to-point or point-to-multipoint solutions, respectively. In the same way as a Service model was proposed for the L3 services a network model has been proposed to support the creation of this services. The models is named L2SM \cite{wen2018yang}. 
+
+The L2SM is a customer centric model. It has two main containers the VPN Service and the Site. One refers to the technological parameters of the services that is going to be deployed, for example: service type (i.e. bgp-vpls, pw3, ldp-vpls, \dots) or service topology (i.e. p2p, p2mp). The second contains all the customer information, including the location, and the connectivity between the CE and the PE. 
+
+This model miss some specific network configuration, that nee to be stored or derived by the network controller to deploy the final configuration on the network devices. 
 
 \subsubsection{Network Topology}
 
