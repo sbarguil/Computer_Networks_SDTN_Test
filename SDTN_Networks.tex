@@ -639,7 +639,25 @@ In the IP domain however, given the different models implemented on the IP Contr
 \label{TAB:discovered_elements}
 \end{table*}
 
-\subsection{Single-domain L2VPN provisioning}
+\subsection{Single-domain IP L2VPN provisioning}
+
+This use case has been tested using a single IP Controller and using the L2SM model to request the service creation between the SDTN and the IP SDN controller. The process for the L2VPN service creation is described in the following steps:
+
+\begin{enumerate}
+    \item Site creation. The two sites must be created on the domain controller. Parameters such as site-id and location-id must be sent to uniquely identify the customer end-points.
+    \item Bearer creation. The network side interface must be selected, so the ne-id and a port port-id must be provided.
+    \item Service Creation. VC-ID to be negotiated by the ends is provided.  
+    \item Site Network Access Creation (SNA). In this step all the data previously created is merged together into a working L2VPN service to be deployed by the controller on the devices using NETCONF. The configuration parameters needed on the body request for the SNA creation include site-id, bearer-id and vpn-id, among others such as ip connectiviy, qos management, l2 encapsulation. 
+\end{enumerate}
+
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l2sm_workflow.png}
+	\caption{L2SM workflow}
+	\label{L2SM_workflow}
+\end{figure}
+
+The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{FIG:L2SM_workflow}, in which not only the POST requests have been included but also the GET requests sent towards the controller for information retrieval purposes. 
 
 \subsection{Multi-domain IP L3VPN provisioning}
 
@@ -695,7 +713,7 @@ However, once these sorts of restrictions were overcome, the procedure for creat
 \begin{figure}
 	\centering
 		\includegraphics[width=\linewidth]{figs/counters.png}
-	\caption{Topological view of the L3VPN}
+	\caption{Traffic counters on the IP devices after the VPN service creation}
 	\label{FIG:counters}
 \end{figure}
 
