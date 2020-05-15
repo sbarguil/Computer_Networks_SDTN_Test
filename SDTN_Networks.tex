@@ -363,7 +363,14 @@ In this section the reference standard model use for the control/management of n
 
 \subsubsection{Provisioning}
 
-The connectivity provisioning into the WDM/OTN optical layers is strictly related with the model proposed. Figure \ref{} represents the optical network topology arrangement proposed in the previous figure and the multi-layer hierarchical connectivity modelling which is being detailed in this section.
+\begin{figure*}
+	\centering
+		\includegraphics[scale=1]{figs/ONF-T-API.png}
+	\caption{Multi-layer topology and connectivity models based on ONF T-API}
+	\label{FIG:ONF-T-API}
+\end{figure*}
+
+The connectivity provisioning into the WDM/OTN optical layers is strictly related with the model proposed. Figure \ref{FIG:ONF-T-API} represents the optical network topology arrangement proposed in the previous figure and the multi-layer hierarchical connectivity modelling which is being detailed in this section.
 
 The connectivity model introduces to central concepts. On one hand, the tapi-connectivity:connectivity-service  object models "intended" solicited by the T-API client layer, to be deployed into the network. On the other hand, the tapi-connectivity:connection objects represents the actual adjacencies between logical interfaces created by configuring the network, in brief the connectivity configurations in the network. 
 
@@ -401,7 +408,14 @@ DSR/ODU and OTSi layers may be collapsed into a single multi-layer node or split
 \paragraph{Photonic-Media layer:}
 The Photonic-Media layer models the Optical Line Protection  (OLP) components, the Reconfigurable/Fixed Optical Add Drop Multiplexers (ROADM/FOADM) and In-Line Amplifiers (ILAs) network elements. Moreover, all the lowest photonic connectivity is represented as PHOTONIC\_MEDIA \texttt{tapi-topology:link} objects collapsing OTS/OMS layers and allowing placing specific monitoring OAM functions of these layers. These forwarding domains SHALL expose the capability of create Media Channel connection and connectivity services between its endpoints.
 
-Moreover, the Media Channel layer the available resources for the reservation of  spectrum resources for a given OTSi channel. The concatenated reserved portion of the along a route is represented as a Media-Channel (MC) construct, and by the OTSiMC construct which represents the actual portion of the spectrum occupied by the signal (MC spectrum must be wider than the OTSiMC). These modelling concepts are critical for the realization of the Open Line System concept introduced by the partially disaggregation of the optical networks. Please see Figure \ref{} graphical representation for more clarity.
+\begin{figure}
+	\centering
+		\includegraphics[scale=1]{figs/Media_channel.png}
+	\caption{Media-channel entities relationship}
+	\label{FIG:Media_channel}
+\end{figure}
+
+Moreover, the Media Channel layer the available resources for the reservation of  spectrum resources for a given OTSi channel. The concatenated reserved portion of the along a route is represented as a Media-Channel (MC) construct, and by the OTSiMC construct which represents the actual portion of the spectrum occupied by the signal (MC spectrum must be wider than the OTSiMC). These modelling concepts are critical for the realization of the Open Line System concept introduced by the partially disaggregation of the optical networks. Please see Figure \ref{FIG:Media_channel} graphical representation for more clarity.
 
 
 \subsection{End-to-end Use Cases Definition}
@@ -420,9 +434,9 @@ Thus, to forward the traffic from the L3VPN services, the ASBR routers from each
 
 Additionally, to deploy any of this service the network has to fulfill the following basic requirements established between origin and destination:
 \begin{itemize}
-    \item IGP Router-ID/Loopback connectivity.
-    \item MPLS and Labelling mechanism LDP, RVSP, other. 
-    \item MP-BGP (family vpnv4/6, ipv4/6).
+    \item PEs connectivity based on IGP Router-ID/Loopback reachability.
+    \item Label switching protocol enabled. MPLS and Labelling mechanism LDP, RVSP, other. 
+    \item MP-BGP sessions between the PEs (address-family vpnv4/6, ipv4/6).
     \item Virtual Routing network instance. 
 \end{itemize}
 
@@ -496,7 +510,6 @@ Finally, for the construction of the multi-layer topology, it is necessary to pe
 	\caption{Workflow for multi-layer topology SDTN-SDN-C}
 	\label{FIG:topology_workflow}
 \end{figure}
-
 
 \begin{figure*}
 	\centering
@@ -656,13 +669,28 @@ Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN sol
 \label{TAB:discovered_ip_l3vpn}
 \end{table*}
 
-When creating the service in a multi-domain and multi-vendor scenario, the drawbacks we have to faced were: 
+When creating the service in a multi-domain and multi-vendor scenario, some of the  drawbacks faced were: 
 \begin{itemize}
     \item Absence of data in the SDN domain controllers for an automatic inter-domain link discovery.
     \item Lack of a fully standardized model implemented in the IP SDN controllers.
     \item Differences in the maximum length size allowed on some configuration parameters (description, SNA names, etc.).
 \end{itemize}
- 
+
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l3vpn_topo.png}
+	\caption{Interconnection view of the L3VPN}
+	\label{FIG:optical_topology_workflow}
+\end{figure}
+
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l3vpn_topo.png}
+	\caption{{Topological view of the L3VPN}
+	\label{FIG:optical_topology_workflow}
+\end{figure}
+
+However, once these sorts of restrictions were overcome, the procedure for creating the L3VPN from the SDTN GUI was successfull. \ref{} shows the per layer view of the end-to-end IPVPN service created, whereas Figure \ref{} shows the service route as seen from the network topology view. 
 
 \subsection{Optical provisioning}
 From the perspective of the optical networks, single domain unconstrained DSR connectivity services as well as Photonic Media Layer services were independently configured in both vendors’ DWDM networks and were verified in the respective NMS systems. The ONF T-API 2.1 YANG data model has been used for the query exchange between the SDTN HCO and the optical domain controllers given the support of this standard model in their NBIs. The UML diagram on Figure ~\ref{FIG:optical_provisioning_workflow} shows the HTTP POST request involved in the optical circuit creation as sent from the SDTN HCO towards the Optical SDNCs, as well as the HTTP GET requests for information retrieval regarding particular connectivity services existing on the network. 
