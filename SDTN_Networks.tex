@@ -140,20 +140,20 @@ Software-Defined Networking,
 Software-Defined Networking (SDN) has emerged as the new reference paradigm to promote network automation and programmability. It has promoted the idea of a real transformation on all the aspects of the: Service delivery, Network and traffic management, mostly because, end-to-end automatic service provision, automated monitoring, fast issue detection and event-based decision taking are mandatory functionalities to offer a high-quality customer experience \cite{ordonez2017network,ong2017onf}.
 
 Conceptually, SDN allows a full decoupling between control and forwarding plane on Physical Network Functions (PNFs) \cite{brief2014openflow}. 
-This concept allows the centralization of complex tasks and enabling the integration of white boxes (smaller equipment, high port density, low processing capacity, facts with generic hardware and lower production cost) in the network access layers. However, this promise is still not a complete reality. Although the term SDN seems quite new, it is already more than twelve (12) years since OpenFlow \cite{brief2014openflow} was defined and NICIRA was founded. NICIRA was the first company to develop a commercial SDN controller (NOX) \cite{gude2008nox,tavakoli2009applying} and today (despite: millionaire investments, several SDN controler solutions available \cite{medved2014opendaylight,berde2014onos}) almost no service provider has a full operative SDN network deployed. Some, of the main barriers founds by service providers until now are:
+This concept allows the centralization of complex tasks and enabling the integration of white boxes (smaller equipment, high port density, low processing capacity, facts with generic hardware and lower production cost) in the network access layers. However, this promise is still not a complete reality. Although the term SDN seems quite new, it is already more than twelve (12) years since OpenFlow \cite{brief2014openflow} was defined and NICIRA was founded. NICIRA was the first company to develop a commercial SDN controller (NOX) \cite{gude2008nox,tavakoli2009applying} and today (despite: millionaire investments and several SDN controler solutions available \cite{medved2014opendaylight,berde2014onos} on the market) almost no service provider has a full operative SDN network deployed. Some, of the main barriers founds by service providers until now are:
 
 \begin{itemize}
     \item There is still a lot of dependency on manually executing tasks.
     \item Network control tasks can not be fully centralized.
     \item The stack of protocols deployed in the network is very complex.  The knowledge that network operators requires to solve problems continues to be very specific.
     \item Confidence in automation solutions is not very high.
-    \item Lot of networks has grown as a combination companies (A big one purchases an small one). In many cases internally they operate as independent carriers. 
+    \item Lot of networks has grown as a combination companies (A big one purchases an small one). In many cases internally they operate as independent carriers. \item Standarization is not close; It generates lack of complete interoperability between vendors.
 \end{itemize}
 
-New approaches has been released in order to gradually adopts SDN in brownfield scenarios. Some of the approaches are based in the use-case design solving based on Net-Ops methodology \cite{devlic2012use,choi2018agile}. 
-This agile methodologies, would take small network task and solve it using a programmable approach. Allowing the integration of new functionalities simpler and more frequent.
+New approaches has been released in order to gradually adopts SDN as a hybrid solution in brownfield scenarios. Some of the approaches are based on agile methodologies \cite{devlic2012use,choi2018agile}. 
+This agile methodologies, would take small network task and solve it using a programmatic approach. Allowing the integration of new functionalities simpler and more frequent.
 
-This paper describes a field trial of a SDN architecture designed for a service provider with multiple network controllers (IP and DWDM). Proving the viability of the implementations of programmable interfaces using standard models and protocols; for specific use cases. The test were done using real hardware and commercial solutions. 
+This paper describes a field trial of an hybrid SDN architecture designed for a service provider with multiple network controllers (IP/MPLS and DWDM) and a multivedor operation network. This work proves the viability of the implementations of programmable network interfaces using common standard models and protocols. The test were done using real hardware and commercial solutions. 
 
 The paper is structured as follows. Section \ref{section:arq} describes the iFusion SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Section \ref{section:net} details the principles of the Network programmability, including concepts of Yang and protocols used in the tests. Section \ref{section:models} describes the service models used for IP/Optical service provision and topology. Section \ref{section:trial} details the test architecture, including commercial network controllers. Section \ref{section:results} detailed the results obtained in this implementation. Finally, Section \ref{section:conclusions} resume the conclusion of the present work and what are the next steps.    
 
@@ -365,7 +365,7 @@ In this section the reference standard model use for the control/management of n
 
 \begin{figure*}
 	\centering
-		\includegraphics[scale=1]{figs/ONF-T-API.png}
+		\includegraphics[scale=0.8]{figs/ONF-T-API.png}
 	\caption{Multi-layer topology and connectivity models based on ONF T-API}
 	\label{FIG:ONF-T-API}
 \end{figure*}
@@ -385,7 +385,9 @@ Then, the multi-layer relationships are construct by stacking CEPs over NEPs and
 
 \subsubsection{Topology}
 
-The topology model should provide the explicit multi-layer topology representation of the L2-L0 network including OTS, OMS, MC, OTSIMC, OTSi/OTSiA, ODU, DSR layers. The network logical abstraction collapses all network layers (DSR, ODU, OTSi/OTSiA and Photonic Media (OTSiMC, MC, OMS, OTS)) which are represented explicitly into a single topology (T0 – Multi-layer topology), modelled as a \texttt{tapi-topology:topology} object within the \texttt{tapi-topology:topology-context/tapi-topology:nw-topology-service} and \texttt{tapi-topology:topology-context/topology}. 
+The topology model should provide the explicit multi-layer topology representation of the L2-L0 network including OTS, OMS, MC, OTSIMC, OTSi/OTSiA, ODU, DSR layers. The network logical abstraction collapses all network layers (DSR, ODU, OTSi/OTSiA and Photonic Media (OTSiMC, MC, OMS, OTS)) which are represented explicitly into a single topology (T0 – Multi-layer topology), modelled as a \texttt{tapi-topology:topology} object within the: \\
+\texttt{tapi-topology:topology-context/... \\
+... tapi-topology:nw-topology-service} and \\ \texttt{tapi-topology:topology-context/topology}. 
 
 The T0 – Multi-layer topology MUST include:
 
@@ -410,7 +412,7 @@ The Photonic-Media layer models the Optical Line Protection  (OLP) components, t
 
 \begin{figure}
 	\centering
-		\includegraphics[scale=1]{figs/Media_channel.png}
+		\includegraphics[scale=0.8]{figs/Media_channel.png}
 	\caption{Media-channel entities relationship}
 	\label{FIG:Media_channel}
 \end{figure}
@@ -568,7 +570,7 @@ Obtaining the end-to-end multi-layer and multi-domain topology via automatic net
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/optical_topology_workflow}
+		\includegraphics[width=\linewidth]{figs/optical_topology_workflow_2.png}
 	\caption{Messages Interchanged for Optical Topology Discovery between the SDTN and Optical SDN Controller}
 	\label{FIG:optical_topology_workflow}
 \end{figure}
@@ -587,7 +589,7 @@ Regarding the IP Domain, to obtain the whole network topology, a query to the co
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/ip_topology_workflow.png}
+		\includegraphics[width=\linewidth]{figs/ip_topology_workflow_2.png}
 	\caption{Message Interchange for IP Topology Discovery}
 	\label{FIG:ip_topology_workflow}
 \end{figure}
@@ -652,7 +654,7 @@ This use case has been tested using a single IP Controller and using the L2SM mo
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/l2sm_workflow.png}
+		\includegraphics[width=\linewidth]{figs/l2sm_workflow_2.png}
 	\caption{Messages Interchanged for L2VPN Provisioning between the SDTN and the IP SDN Controller}
 	\label{L2SM_workflow}
 \end{figure}
@@ -727,7 +729,7 @@ First, the API Client was used to send the E2E DSR Service creation query toward
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/optical_provisioning_workflow.png}
+		\includegraphics[width=\linewidth]{figs/optical_provisioning_workflow_2.png}
 	\caption{Messages Interchanged for Optical Provisioning between the SDTN and the Optical SDN Controller}
 	\label{FIG:optical_provisioning_workflow}
 \end{figure}
