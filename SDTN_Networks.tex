@@ -444,7 +444,7 @@ Additionally, to deploy any of this service the network has to fulfill the follo
 
 In our proposal solution, Multidomain IP L3VPN Provision fulfill connectivity and SLAs compliance between sites using a common infrastructure, support changes in topology as well as in L3VPN parameters such as scheduler and QoS profile. 
 
-The interface between the SDTN and SDN-C shall integrate only mandatory information that is held at the OSS layer or that is requested by the customer service. For this specific use case, the parameters and request will have the following four steps per each domain. Fig.  ~\ref{FIG:multidomain_service_provisioning_workflow} depicts the corresponding workflow where the following steps are needed to provision the multi-domain service:
+The interface between the SDTN and SDN-C shall integrate only mandatory information that is held at the OSS layer or that is requested by the customer service. For this specific use case, the parameters and request will have the following four steps per each domain. \ref{FIG:l3vpn_workflow} depicts the corresponding workflow where the following steps are needed to provision the multi-domain service:
 \begin{enumerate}
     \item Create Site (VPN.L3.Site.Add)
     \item Create Bearer (VPN.L3.Bearer.Add)
@@ -452,12 +452,12 @@ The interface between the SDTN and SDN-C shall integrate only mandatory informat
     \item Create Access (VPN.L3.Access.Add)
 \end{enumerate}
 
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/multidomain_service_provisioning_workflow.png}
-	\caption{Workflow for multi-domain service provisioning SDTN-SDN-C}
-	\label{FIG:multidomain_service_provisioning_workflow}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\includegraphics[width=\linewidth]{figs/multidomain_service_provisioning%_workflow.png}
+%	\caption{Workflow for multi-domain service provisioning SDTN-SDN-C}
+%	\label{FIG:multidomain_service_provisioning_workflow}
+%\end{figure}
 
 \subsubsection{Multi-layer Topology}
 The multi-layer topology use case is based on the perspectives provided by all the IP and Optical WDM/OTN SDN-Cs. The scope of it, includes multiple domains within the same network, where each SDN-C will export its IETF context or T-API context, correspondingly. Use case is built upon the ONF T-API \footnote{https://wiki.opennetworking.org/display/OTCC/TAPI} Topology module and Connectivity Service module for L2-L0 Optical side, IETF implementations, specifically IETF RFC8345 \cite{rfc8345} as basis for the generic network model, and a reduced version of YANG Data Model for Traffic Engineering in \cite{ietf-teas-yang-te-topo-22} for L1 IP topology augmenting the generic model. We have built a new model putting all together following the best practices defined in previous works in the topic. In order to provide an explicit multi-layer topology representation of the whole network for all its layers. 
@@ -504,14 +504,14 @@ There are functional requirements that the SDTN controller must meet:
 \end{itemize}
 It’s necessary to remark in the T-API model side the Plug-id parameter is a "String" and in the IETF side is "Binary", therefore the SDTN controller MUST have the ability to traduce the “Binary” value to “String” or vice versa, to be able to make the match in the correlation process considered to be standardized.
 
-Finally, for the construction of the multi-layer topology, it is necessary to perform the process by layers satisfying the prerequisites, in which the SDTN will perform the task of correlating the values that until now will be filled manually in the plug-id attributes in IP and Optical layers. The process proposed is depicted as workflow in Fig. ~\ref{FIG:topology_workflow}.
+Finally, for the construction of the multi-layer topology, it is necessary to perform the process by layers satisfying the prerequisites, in which the SDTN will perform the task of correlating the values that until now will be filled manually in the plug-id attributes in IP and Optical layers. The process proposed is depicted as workflow in \ref{FIG:ip_topology_workflow}.
 
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/topology_workflow.png}
-	\caption{Workflow for multi-layer topology SDTN-SDN-C}
-	\label{FIG:topology_workflow}
-\end{figure}
+%\begin{figure}
+%	\centering
+%		\includegraphics[width=\linewidth]{figs/topology_workflow.png}
+%	\caption{Workflow for multi-layer topology SDTN-SDN-C}
+%	\label{FIG:topology_workflow}
+%\end{figure}
 
 \begin{figure*}
 	\centering
@@ -680,7 +680,6 @@ The workflow between the SDTN and the IP Controller has been summarized in the U
 
 Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN solution, a scenario for an L3VPN service configuration was proposed. The main goal was to create a L3VPN between two access routers, each of them located in different IP domains. The IP domains are connected using a DWDM optical network. Depicted in Figure \ref{}. The L3VPN service was created using the SDTN GUI and the configuration parameters used for this matter are shown on Table \ref{TAB:discovered_ip_l3vpn}.
 
-
 \begin{table*}[]
 \caption{Configuration Parameters for L3VPN}
 \begin{adjustbox}{width=0.5\textwidth}
@@ -710,6 +709,16 @@ When creating the service in a multi-domain and multi-vendor scenario, some of t
     \item Lack of a fully standardized model implemented in the IP SDN controllers.
     \item Differences in the maximum length size allowed on some configuration parameters (description, SNA names, etc.).
 \end{itemize}
+
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l3vpn_workflow.png}
+	\caption{Messages Interchange for IP multi-domain L3VPN service creation.}
+	\label{FIG:l3vpn_workflow}
+\end{figure}
+
+
+The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{}.
 
 \begin{figure}
 	\centering
