@@ -670,7 +670,7 @@ The workflow between the SDTN and the IP Controller has been summarized in the U
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/l2vp_results.png}
+		\includegraphics[width=\linewidth]{figs/l2vpn_results.png}
 	\caption{L2VPN service creation results retrieved from the SDTN GUI. Information included three panes: Topology, Services lists and Service Details.}
 	\label{FIG:L2SM_results}
 \end{figure}
@@ -713,19 +713,12 @@ When creating the service in a multi-domain and multi-vendor scenario, some of t
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/l3vpn_topo.png}
-	\caption{Layered interconnection view of the L3VPN}
-	\label{FIG:l3vpn_topo}
+		\includegraphics[width=\linewidth]{figs/l3vpn_results.png}
+	\caption{L3VPN service creation results retrieved from the SDTN GUI. Included two visualization panes: The hop-by-hop connection view or the geographical view.}
+	\label{FIG:l3vpn_results}
 \end{figure}
 
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/l3vpn_topo_2.png}
-	\caption{Topological view of the L3VPN}
-	\label{FIG:l3vpn_topo2}
-\end{figure}
-
-However, once these sorts of restrictions were overcome, the procedure for creating the L3VPN from the SDTN GUI was successfull. \ref{FIG:l3vpn_topo} shows the per layer view of the end-to-end IPVPN service created, whereas Figure \ref{FIG:l3vpn_topo2} shows the service route as seen from the network topology view. The configuration of the IPVPN service in the network elements was verified by using their CLI as well as the IP-SDN controllers GUI. 
+Once these sorts of restrictions were overcome, the procedure for creating the L3VPN from the SDTN GUI was successful. \ref{FIG:l3vpn_results} shows the two visualization options provided by the SDTN. First, a per layer view of the end-to-end IPVPN service created, or the service route as seen from the network topology view.
 
 \begin{figure}
 	\centering
@@ -734,7 +727,7 @@ However, once these sorts of restrictions were overcome, the procedure for creat
 	\label{FIG:counters}
 \end{figure}
 
-A traffic generator was used in site to introduce traffic on the network and test the functionality of the multi-domain L3VPN service created with the SDTN solution, which proves to have been successful (\ref{FIG:counters} shows the traffic statistics as seen on the CLI if the routers).
+The configuration of the IP L3VPN service in the network elements was verified by using their CLI as well as the IP-SDN controllers GUI. A traffic generator was used in site to introduce traffic on both ends of the network and test the functionality of the multi-domain L3VPN service created.\ref{FIG:counters} shows the traffic statistics as seen on the CLI of the routers.
 
 \subsection{Optical provisioning}
 From the perspective of the optical networks, single domain unconstrained DSR connectivity services as well as Photonic Media Layer services were independently configured in both vendors’ DWDM networks and were verified in the respective NMS systems. The ONF T-API 2.1 YANG data model has been used for the query exchange between the SDTN HCO and the optical domain controllers given the support of this standard model in their NBIs. The UML diagram on Figure ~\ref{FIG:optical_provisioning_workflow} shows the HTTP POST request involved in the optical circuit creation as sent from the SDTN HCO towards the Optical SDNCs, as well as the HTTP GET requests for information retrieval regarding particular connectivity services existing on the network. 
