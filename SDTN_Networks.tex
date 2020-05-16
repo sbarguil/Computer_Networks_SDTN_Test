@@ -656,10 +656,25 @@ This use case has been tested using a single IP Controller and using the L2SM mo
 	\centering
 		\includegraphics[width=\linewidth]{figs/l2sm_workflow_2.png}
 	\caption{Messages Interchanged for L2VPN Provisioning between the SDTN and the IP SDN Controller}
-	\label{L2SM_workflow}
+	\label{FIG:L2SM_workflow}
 \end{figure}
 
-The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{FIG:L2SM_workflow}, in which not only the POST requests have been included but also the GET requests sent towards the controller for information retrieval purposes. 
+The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{FIG:L2SM_workflow}. The four POST requests described previously and their equivalent GET requests exchanged between the SDTN and the IP-SDN controller are included. 
+
+\ref{FIG:L2SM_results} shows the L2VPN service creation results as seen from the SDTN GUI, where three information panes are included: 
+\begin{itemize}
+    \item Configured NEs in the network map. The yellow ones include the two service end-points.
+    \item List of all the services of a common type. In this case VPLS service was selected. 
+    \item Service details, including: Name, Description and End-points (vlans, ports and topology-role). 
+\end{itemize}
+
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l2vp_results.png}
+	\caption{L2VPN service creation results retrieved from the SDTN GUI. Information included three panes: Topology, Services lists and Service Details.}
+	\label{FIG:L2SM_results}
+\end{figure}
+
 
 \subsection{Multi-domain IP L3VPN provisioning}
 
@@ -757,32 +772,9 @@ Brief summary of faced issues during the integration of the SDTN architecture, a
  However, except for the lack of the inter-domain ports exposure on the IP domains as well as the retrieval of data required for automatic discovery of Inter-Domain Links (e.g. Plug-ID and TTI values), the APIs provided sufficient functionality for their implementation of all the use cases approached on this paper, demonstrating the viability of the SDTN solution on a multi-vendor and multi-domain network environment.
 
 \subsection{Future Work}
-As a future work we envision, a key component in the SDTN architecture which is the integration between the NBI of the SDTN Hierarchical Controller and an upper layer within OSS ecosystem, that pointing to create an unique interface from whole network towards B/OSS systems. The workflow is very similar to that of the Southbound Interface interaction with the SDN domain controllers, meaning that RESTCONF API query exchange flows in the same way, except that the OSS systems sends the queries to the SDTN NBI interface using the corresponding request depending on the domain layer and the used YANG model by the controllers. The preferred API is RESTCONF/YANG based with standard (IETF, ONF T-API) since is the basis of the SDTN philosophy, but any other APIs, non-standard YANG models or any other open interface such as MTOSI can be used as well, if required. 
-Having said this, the feasible workflow to represent a complete interaction from the SDN domain controllers ending in the OSS layer is described below: 
-\begin{enumerate}
-    \item The domain controllers expose their RESTCONF/YANG models on their NBIs.
-    \item Each domain is discovered by the SDTN SBI using a domain Adapter, retrieving the data from the controllers related to the NEs, links, and services which the level of detail depends on what is provided by the domain controller. 
-    \item The domain Adapter translates the data from the information model used in the domain controller's API into the internal information model which is stored in a unified and centralized database.
-    \item The stored information in the database can be accessed at any time by an OSS system through the NBI interface querying it through the TCP port 8443 and using the RESTCONF/YANG API requests (IETF model for IP domain and T-API for optical domain), considering the prefix “md” into the query
-\end{enumerate}
+As future work, the hybrid SDN deployment done until now must be complemented with an integration between the NBI exposed by the SDTN and the OSS applications ecosystem. The OSS ecosystem can include for example strategic and tactical planning applications, able to support the year by year demand management and planning tasks done within the organization. A common interface defined and available for these tasks would allow the OSS systems providers to focus on the quality of the applications developed, forgetting the complexity of the network management. Economically it will generate direct reductions in the applications integration time.
 
-Example of querying IP domain: \\
-\textit{GET \{\{protocol\}\}://\{\{server\}\}:\{\{port\}\}/md/ietf/restconf \\
-/data/ietf-network:networks \\}
-Example of querying optical domain: \\
-\textit{GET \{\{protocol\}\}://\{\{server\}\}:\{\{port\}\}/md/tapi/restconf \\
-/data/tapi-common:context/tapi-topology:topology-context \\
-/topology=dc9c3f00-133a-47ae-aa00-59e496292a6c} \\
-At the same time, it is noted the way to start querying the NBI interface is by requesting the authentication token beforehand. The workflow which depicts the API exchange between SDTN NBI and an upper layer can be simplified as shown at the next drawing: 
-
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/sdtn_nbi.png}
-	\caption{SDTN NBI as API exchange mechanism between Network, SDTN and B/OSS}
-	\label{FIG:sdtn_nbi}
-\end{figure}
-
-Since the stored database has been unified, the queries can be done per layer, not per domain.
+Additionally, the scope of this work can be extended to cover Traffic Engineering use cases. Standardization in the NBI requests to support the LSPs creation will enable easy management of the traffic flows in the network, generating a real massification of the Traffic Engineering deployment and creating new network optimization solutions for the operators.
 
 \printcredits
 
