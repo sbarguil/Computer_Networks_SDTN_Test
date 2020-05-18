@@ -25,6 +25,7 @@
 \usepackage[numbers]{natbib}
 \usepackage{listings}
 \usepackage{adjustbox}
+\usepackage{cleveref}
 
 %%%Author definitions
 \def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
@@ -153,9 +154,9 @@ This concept allows the centralization of complex tasks and enabling the integra
 New approaches has been released in order to gradually adopts SDN as a hybrid solution in brownfield scenarios. Some of the approaches are based on agile methodologies \cite{devlic2012use,choi2018agile}. 
 This agile methodologies, would take small network task and solve it using a programmatic approach. Allowing the integration of new functionalities simpler and more frequent.
 
-This paper describes a field trial of an hybrid SDN architecture designed for a service provider with multiple network controllers (IP/MPLS and DWDM) and a multivedor operation network. This work proves the viability of the implementations of programmable network interfaces using common standard models and protocols. The test were done using real hardware and commercial solutions. 
+In this article a field trial of an hybrid SDN architecture for a service provider is described. The field trial includes multiple network controllers (two for IP/MPLS and two for DWDM) and a real-commercial-multivedor-operative network. This work proves the viability of the implementations of programmable network interfaces using common standard models and protocols.
 
-The paper is structured as follows. Section \ref{section:arq} describes the iFusion SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Section \ref{section:net} details the principles of the Network programmability, including concepts of Yang and protocols used in the tests. Section \ref{section:models} describes the service models used for IP/Optical service provision and topology. Section \ref{section:trial} details the test architecture, including commercial network controllers. Section \ref{section:results} detailed the results obtained in this implementation. Finally, Section \ref{section:conclusions} resume the conclusion of the present work and what are the next steps.    
+The paper is structured as follows. Section \cref{section:arq} describes the iFusion SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Section \cref{section:net} details the principles of the Network programmability, including concepts of Yang and protocols used in the tests. Section \cref{section:models} describes the service models used for IP/Optical service provision and topology. Section \cref{section:trial} details the test architecture, including commercial network controllers. Section \cref{section:results} detailed the results obtained in this implementation. Finally, Section \cref{section:conclusions} resume the conclusion of the present work and what are the next steps.    
 
 \section{SDN Architecture}
 \label{section:arq}
@@ -167,7 +168,7 @@ The paper is structured as follows. Section \ref{section:arq} describes the iFus
     \item YANG data models based on latest developments in the standards-development organizations (SDOs) \cite{bjorklund2016yang}: \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig}.
 \end{itemize}
 
-The proposed architecture can be shown in terms of components and relationship among them, as depicted in \ref{FIG:1}. 
+The proposed architecture can be shown in terms of components and relationship among them, as depicted in \cref{FIG:1}. 
 
 \begin{figure*}
 	\centering
@@ -194,7 +195,7 @@ The key elements of the SDN iFUSION architecture are the following:
 \item \textbf{Service SDN controller}: An additional SDN layer that takes into account services might be needed. 
 \end{itemize}
 
-The iFUSION architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP}, \hyperref[section:mw]{Microwave} for wireless transport, and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller.
+The iFUSION architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP} and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller.
 
 The Software Defined Transport Network (SDTN) Controller is responsible to orchestrate the respective SDN Domain controllers within the transport segment (IP, Optical and MW) through the Domain Controllers\'NBI, providing an end-to-end transport network vision. The SDTN Controller aggregates demands from the management and services layer exposing a unified NBI which should provide resource configuration abstraction and technology agnostic service definition. 
 
@@ -212,7 +213,7 @@ The SDN Domain controllers, on the other hand, are in charge of all the devices 
 \label{section:ip}
 IP networks are deployed following a hierarchical model, mixing equipment from different vendors. The IP boxes are interoperable at data plane level and control plane level (e.g. routing protocols such as IS-IS, OSPF or BGP). Due to scalability reasons, the IP networks are typically subdivided in IP domains, so the routing and control protocols are confined to their administrative domain.
 
-The foreseen SDN solution for IP segment is based on a single, multi-vendor IP SDN Domain Controller in charge of configuring the IP network elements, as shown in \ref{FIG:2}.
+The foreseen SDN solution for IP segment is based on a single, multi-vendor IP SDN Domain Controller in charge of configuring the IP network elements, as shown in \cref{FIG:2}.
 
 \begin{figure*}
 	\centering
@@ -258,15 +259,6 @@ In the medium and long term, the direct programmability of the components can ha
     \item \textbf{Full disaggregation}: The long term objective is the open management of the line system, i.e., the defragmentation of the optical transport network in vendor islands by the adoption of a common standardized interface for open line systems (multi-vendor) to be managed by a single optical SDN Controller.
 \end{enumerate}
 
-\subsection{Wireless transport domain}
-\label{section:mw}
-Wireless Transport networks, typically consisting on microwave (MW) radio links, are deployed on a point-to-point basis covering a given region using several vendors. Currently the wireless networks are operated through vendor proprietary Network Management Systems (NMS) with specific proprietary interfaces.
-
-Operation, configuration and maintenance activities are performed manually and statically. Furthermore, this diversity in NMSs and vendor installed base prevents from using advanced applications that could provide more sophisticated features (e.g. power management or multi-layer coordination), since actual integration costs disincentive any effort in such direction. 
-
-This reality has fostered the standardization of a common framework for definition of a unified and standard control plane for microwave systems, pursuing as objective the multi-vendor interworking, multi-layer control, and network-wide coordination.
-For practical SDN deployments in this technical domain the ONF has released a standard model published as TR-532 document \cite{tr2016532}, with the support of the wide community of MW system manufacturers. A number of PoCs have served as validation steps of the viability of the model, as well as helping to refine it and to prepare the industry for this evolution. This is the data model adopted by Telefonica in the iFUSION architecture.
-
 \subsection{Integration of SDTN in the overall operator’s systems architecture}
 \label{section:sdtn}
 The SDTN Controller will keep visibility of all the transport network segments. It will expose an abstracted topology view of the network resources and the available set of network services to different clients through its North-Bound APIs.  
@@ -299,23 +291,22 @@ It can be used to cover all the FCAPs (Fault, Configuration, Accounting and Perf
 Due to the network programmability necessities. Protocols and Data models must be selected to allows the interaction between the network controllers and devices. There has been a great interest in using YANG to define these data models. However, this YANG definition may include two groups of models. One set used strictly to attack the devices and the ones used to describe services in a portable and technological way (independent of which network operator uses the model). 
 This differentiation between Service and Device Models introduced in early 2018, would allow abstract some information in the control layer. The service models may be used as part of the SDN architecture, describing the data interchanged between the network controllers and between OSS systems and the control Layer \cite{wu2017service}. While the device models described the specific configuration of the network elements. 
 
-Example of service models definitions are described in the following sections: Section \ref{section:IPmodels} for IP and \ref{section:OPTmodels} for Optical.
+Example of service models definitions are described in the following sections: Section \cref{section:IPmodels} for IP and \cref{section:OPTmodels} for Optical.
 
 \subsection{IP Network Models}
 \label{section:IPmodels}
 
-The IP Service models covered in this section includes the ones used to create, delete and retrieve \hyperref[section:l3nm]{L3}/ \hyperref[section:l2nm]{L2VPN} services and to collect the \hyperref[section:topo]{topology} from the network. This service models are part of the standarization track in the IETF. 
+This section describes the service models used for the field trial. The IP service models are YANG modules defined to support the creation, deletion and retrieval of \hyperref[section:l3nm]{L3}/ \hyperref[section:l2nm]{L2VPN}. The ones defined to collect the network \hyperref[subsection:IPtopo]{topology} from the IP/MPLS network are also explained. The models described in this section are abstract models that technologically describes the network requirements and are RFCs or working-group-drafts inside the IETF.
 
 \subsubsection{L3NM}
 \label{section:l3nm}
-The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rosen2006rfc} provides a multipoint, routed service to the customer over an IP/MPLS core. The L3VPNs are widely used to deploy 3G/4G, fixed and enterprise services principally due to the fact that not only several traffic discrimination policies can be applied to transport and guarantee SLAs across the network but also because several stitching methodologies can be applied to combine access and transport services. 
+The Layer 3 Virtual Private Network (VPN) service defined in RFC 4364 \cite{rosen2006rfc} provides a multipoint, routed service to the customer over an IP/MPLS core. The L3VPNs are widely used to deploy 3G/4G, fixed and enterprise services principally due to the fact that not only several traffic discrimination policies can be applied across the transport network but also because several stitching methodologies can be applied to combine access and transport services. 
 
-Some service models has been defined and standardized until now. L3SM \cite{rfc8299} is a Customer Service Model that describes the requirements of a L3VPN service from the point of view of the customer. It defines a YANG data model that can be used in the communication between customers and network operators. 
+Some service models has been defined and standardized until now to support the L3VPN creation. L3SM \cite{rfc8299} is a Customer Service Model that describes the requirements of a L3VPN service based on the customer requirements; The L3SM model keeps some commercial customer parameters as the customer site location.
 
-L3NM is a Service Network Model \cite{voyer2019internet}. The L3NM YANG model is exposed by network controllers to manage and control the VPN Service configuration. The model describes a VPN Service in the service provider network. It contains information of the service provider network such as NE-ID and Interfaces-ID and might include allocated resources such as the Route Targets and Route Distinguishers.
+L3NM \cite{voyer2019internet} is a complementary Network Model of the L2SM. It differs from the L3SM because It is completely network-centric, it is focused on the service provider's internal network configurable parameters more than the customer information. The L3NM can be exposed by network controllers to manage and control the VPN Service configuration in multi-domain scenarios and It contains information of the service provider network such as NE-ID and Interfaces-ID and might include allocated resources such as the Route Targets (RTs) and Route Distinguishers (RDs).
 
-The L3NM model is Network Centric, it is focused on the service provider internal network parameters. The data model can be used to facilitate communication between the service orchestrator and the SDTN network controller. Also, the SDTN network controller can further include network specific information in the service request (i.e. transport LSP binding, Router Targets assignation, routing profiles or encryption). In addition, it facilitates multi-domain orchestration, where logical resources (such as route targets or route distinguishers) must be synchronized between domains.
-The L3NM model does not keep any of the commercial customer parameters, which belong to the OSS/BSS layer.
+The L3NM model will be used in this field trial as the data model used between the SDTN and the IP SDN Network controllers. The SDTN network controller will include network-specific information in the service request (i.e. transport LSP binding, routing profiles or encryption); and in order to facilitate the multi-domain orchestration, the SDTN will assign some logical resources (such as route targets or route distinguishers) that must be synchronized between domains. \Cref{FIG:l3nm} shows the structure of the YANG data model, where the main container (VPN Service) is used to group the information of the VPN-Node (VRFs) and the VPN-Network Accesses (Interfaces).
 
 \begin{figure*}
 	\centering
@@ -328,14 +319,14 @@ The L3NM model does not keep any of the commercial customer parameters, which be
 \label{section:l2nm}
 
 L2 services belongs to the class of IP virtual leased line services (VLLs) or virtual private LAN services (VPLS)\cite{andersson2006framework}, which are a fundamental part of the service portfolio offered by SPs. 
-VLLs and VPLS can be generally described as point-to-point or point-to-multipoint solutions, respectively. In the same way as a Service model was proposed for the L3 services a network model has been proposed to support the creation of this services. The models is named L2SM \cite{wen2018yang}. 
+VLLs and VPLS can be generally described as point-to-point or point-to-multipoint solutions, respectively. In the same way as the L3SM is the service model proposed for the L3VPNs is there already an equivalent for the L2 services. The model is named L2SM \cite{wen2018yang}. 
 
-The L2SM is a customer centric model. It has two main containers the VPN Service and the Site. One refers to the technological parameters of the services that is going to be deployed, for example: service type (i.e. bgp-vpls, pw3, ldp-vpls, \dots) or service topology (i.e. p2p, p2mp). The second contains all the customer information, including the location, and the connectivity between the CE and the PE. 
+As the L3, the L2SM is a customer centric model. It has two main containers the VPN Service and the site depicted in the rigth side of \cref{FIG:l3nm}. The service container has all the technological parameters of the services that is going to be deployed, for example: service type (i.e. bgp-vpls, pw3, ldp-vpls, \dots) or service topology (i.e. p2p, p2mp). The site container has all the customer information, including the customer-location, and the connectivity parameters between the CE and the PE. 
 
-This model miss some specific network configuration, that nee to be stored or derived by the network controller to deploy the final configuration on the network devices. 
+This model miss some specific network configuration, that need to be stored or derived by the network controller to deploy the final configuration on the network devices. An additional work to complement this model can be proposed for futures implementations.  
 
 \subsubsection{Network Topology}
-\label{section:topo}
+\label{subsection:IPtopo}
 
 The proposed control architecture relies on providing different levels of abstraction for each control layer. Therefore, the needs in terms of topology and knowledge of the service provider network differ among components. 
 
@@ -350,13 +341,13 @@ Currently, the topology representations are limited to the scope of each of the 
 
 However, as part of the I2RS working group on the IETF a common base model for an initial network topology representation has been defined. The model includes: Nodes and Links. As a complementary work, several augmentations has been done to cover the L2, L3 and TE functionalities.
 
-In this implementation, the topology models used are: 
+In this implementation, the topology models used to retieve the IP network are: 
 \begin{itemize}
 \item IETF Network (RFC8345): Includes the Network, Node and Link concepts \cite{clemm2018yang}.
 \item IETF Network Topology (RFC8346): Includes Termination-Points inside the Nodes and IP specific parameters such as addressing information \cite{varga2018internet}.
 \end{itemize}
 
-\subsection{Optical Network Model - TEF gCTIO}
+\subsection{Optical Network Model}
 \label{section:OPTmodels}
 
 In this section the reference standard model use for the control/management of networks based on WDM/OTN technologies is described. The proposed solution for the Northbound Interface of Optical Domain SDN-C is based on ONF T-API information models and the RESTCONF protocol. Please note, that in this transport domain, the same solution (T-API + RESTCONF) is also proposed to be the NBI of the hierarchical SDTN Controller towards Service B/OSS layer.
@@ -370,7 +361,7 @@ In this section the reference standard model use for the control/management of n
 	\label{FIG:ONF-T-API}
 \end{figure*}
 
-The connectivity provisioning into the WDM/OTN optical layers is strictly related with the model proposed. Figure \ref{FIG:ONF-T-API} represents the optical network topology arrangement proposed in the previous figure and the multi-layer hierarchical connectivity modelling which is being detailed in this section.
+The connectivity provisioning into the WDM/OTN optical layers is strictly related with the model proposed. \Cref{FIG:ONF-T-API} represents the optical network topology arrangement proposed in the previous figure and the multi-layer hierarchical connectivity modelling which is being detailed in this section.
 
 The connectivity model introduces to central concepts. On one hand, the tapi-connectivity:connectivity-service  object models "intended" solicited by the T-API client layer, to be deployed into the network. On the other hand, the tapi-connectivity:connection objects represents the actual adjacencies between logical interfaces created by configuring the network, in brief the connectivity configurations in the network. 
 
@@ -384,6 +375,7 @@ The network model is multi-layer so it is needed to establish multi-layer relati
 Then, the multi-layer relationships are construct by stacking CEPs over NEPs and providing the upper layer resources representations by the dynamic creation of new NEPs, e.g., an OTSi connection, when created and operational, it provides the ODU upper layer resources in the form of NEPs which in turn can be consumed to create ODU connections which will provide the DSR layer resources.
 
 \subsubsection{Topology}
+\label{subsection:OPTopo}
 
 The topology model should provide the explicit multi-layer topology representation of the L2-L0 network including OTS, OMS, MC, OTSIMC, OTSi/OTSiA, ODU, DSR layers. The network logical abstraction collapses all network layers (DSR, ODU, OTSi/OTSiA and Photonic Media (OTSiMC, MC, OMS, OTS)) which are represented explicitly into a single topology (T0 – Multi-layer topology), modelled as a \texttt{tapi-topology:topology} object within the: \\
 \texttt{tapi-topology:topology-context/... \\
@@ -412,39 +404,32 @@ The Photonic-Media layer models the Optical Line Protection  (OLP) components, t
 
 \begin{figure}
 	\centering
-		\includegraphics[scale=0.8]{figs/Media_channel.png}
+		\includegraphics[scale=0.75]{figs/Media_channel.png}
 	\caption{Media-channel entities relationship}
 	\label{FIG:Media_channel}
 \end{figure}
 
-Moreover, the Media Channel layer the available resources for the reservation of  spectrum resources for a given OTSi channel. The concatenated reserved portion of the along a route is represented as a Media-Channel (MC) construct, and by the OTSiMC construct which represents the actual portion of the spectrum occupied by the signal (MC spectrum must be wider than the OTSiMC). These modelling concepts are critical for the realization of the Open Line System concept introduced by the partially disaggregation of the optical networks. Please see Figure \ref{FIG:Media_channel} graphical representation for more clarity.
+Moreover, the Media Channel layer the available resources for the reservation of  spectrum resources for a given OTSi channel. The concatenated reserved portion of the along a route is represented as a Media-Channel (MC) construct, and by the OTSiMC construct which represents the actual portion of the spectrum occupied by the signal (MC spectrum must be wider than the OTSiMC). These modelling concepts are critical for the realization of the Open Line System concept introduced by the partially disaggregation of the optical networks. See \cref{FIG:Media_channel} graphical representation for more clarity.
 
 
 \subsection{End-to-end Use Cases Definition}
 The two end-to-end uses cases defined for testing in this work are described in the next subsections:
 
 \subsubsection{Multi-domain IP L3VPN provisioning}
-The IP L3VPN service defined in RFC4364 \cite{rfc4364} provides a multipoint, routed service to the customer over an IP/MPLS core. The L3VPNs are widely used to deploy 3G/4G, fixed and enterprise services principally due to the fact that several traffic discrimination policies can be applied in the network to transport and guarantee the right SLAs to the mobile customers.
+\label{section:muli-l3nm}
 
-The purpose of this use case is to describe the Telefonica’s reference NBI for the multi-domain IP L3VPN provision based on the interactions with IP SDN-Cs, including the information models which conforms this interface. The scope includes multiple domains within the same network, where each SDN-C is required to implement the IETF L3NM model described in subsection 4.1.1. We assume an upper OSS send a provisioning query for a IP L3VPN,  that goes through intermediatation of the SDTN, which orchestrates the provision of the service and expose an unified view of it.
+As described previously in the \cref{section:l3nm} the L3VPNs services are not exclusive of single domain implementation. Multi-domain IP L3VPN is a common requirement in the service providers. The reality of the brownfield scenarios is multiple-AS, multiple-IGPs, or multiple-vendor segmentations. Despite this, the service provision process may require a set of interactions with more than one IP SDN Controller. 
 
-Notice that the Multi-domain L3VPN Service can only be exposed if there are links interconnecting all the different network domains over which the service would be passing through. Where the Multilayer Topology use case will be explained in further detail in the next chapter. 
+The scope of this work includes two domains within the same network. Each domain is controlled by an independent SDN Controller. Each controller has implemented the IETF L3NM model described in subsection \cref{section:l3nm}. We have proved the SDTN as a network orchestrator to delegate the required provision parameters to each controller and expose an unified view of it.
 
-From a signalling perspective, it is required that every origin PE-Routers from a region, usually concentrated in an upper layer, can establish an end-to-end LSP to the destination PE-Router. Networks is organised by clusters and rings within. Every cluster is closed from a connectivity perspective by clusters/ring heads. Those Head-Routers have the Autonomous System Border Router (ASBR) role as well as Inline Router reflector for its Region/Cluster. 
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/l3vpn_workflow.png}
+	\caption{Messages Interchange for IP multi-domain L3VPN service creation.}
+	\label{FIG:l3vpn_workflow}
+\end{figure}
 
-Thus, to forward the traffic from the L3VPN services, the ASBR routers from each region establish an eBGP session against the Core-Routers. This session exports the Router-ID plus Label information of all the routers in the region using BGP-LU \cite{rfc8277}. Additionally, there is another eBGP session between the HL3 of the region and the core Router-Reflectors to export the VPNv4 routes from each VPN service. This eBGP session requires a mandatory a Next-Hop-Unchanged configuration to avoid network loops or misconfigured paths. All of this control plane setup allows the creation of an end-to-end LSP from the access layer to the platforms without changing the configuration during the service provisioning.
-
-Additionally, to deploy any of this service the network has to fulfill the following basic requirements established between origin and destination:
-\begin{itemize}
-    \item PEs connectivity based on IGP Router-ID/Loopback reachability.
-    \item Label switching protocol enabled. MPLS and Labelling mechanism LDP, RVSP, other. 
-    \item MP-BGP sessions between the PEs (address-family vpnv4/6, ipv4/6).
-    \item Virtual Routing network instance. 
-\end{itemize}
-
-In our proposal solution, Multidomain IP L3VPN Provision fulfill connectivity and SLAs compliance between sites using a common infrastructure, support changes in topology as well as in L3VPN parameters such as scheduler and QoS profile. 
-
-The interface between the SDTN and SDN-C shall integrate only mandatory information that is held at the OSS layer or that is requested by the customer service. For this specific use case, the parameters and request will have the following four steps per each domain. \ref{FIG:l3vpn_workflow} depicts the corresponding workflow where the following steps are needed to provision the multi-domain service:
+For this specific use case, the parameters and request will have the following four steps per each domain. \cref{FIG:l3vpn_workflow} depicts the corresponding workflow where the following steps are needed to provision the multi-domain service:
 \begin{enumerate}
     \item Create Site (VPN.L3.Site.Add)
     \item Create Bearer (VPN.L3.Bearer.Add)
@@ -460,51 +445,28 @@ The interface between the SDTN and SDN-C shall integrate only mandatory informat
 %\end{figure}
 
 \subsubsection{Multi-layer Topology}
-The multi-layer topology use case is based on the perspectives provided by all the IP and Optical WDM/OTN SDN-Cs. The scope of it, includes multiple domains within the same network, where each SDN-C will export its IETF context or T-API context, correspondingly. Use case is built upon the ONF T-API \footnote{https://wiki.opennetworking.org/display/OTCC/TAPI} Topology module and Connectivity Service module for L2-L0 Optical side, IETF implementations, specifically IETF RFC8345 \cite{rfc8345} as basis for the generic network model, and a reduced version of YANG Data Model for Traffic Engineering in \cite{ietf-teas-yang-te-topo-22} for L1 IP topology augmenting the generic model. We have built a new model putting all together following the best practices defined in previous works in the topic. In order to provide an explicit multi-layer topology representation of the whole network for all its layers. 
 
-A multi-layer multi-domain topology abstraction unified view is required for vendor-agnostic integration on Service Providers systems. We propose to create a unique topology based on the T-API Topology and IETF Topology Flat Abstraction models which collapses all layers. A key element to achieved that, it is the usage of a correlation plug-id concept, to join the IP and Optical layers. Due to there is no a dynamic protocol or common element between the ONF/IETF standards that would allow their correlation. 
-
-There are some pre-requisites to build the multi-layer topology and those are:
+The multi-layer topology use case is based on the data provided by all the \hyperref[subsection:IPtopo]{IP} and \hyperref[subsection:OPTopo]{Optical WDM/OTN} SDN-Controllers. The scope of it, includes the composition of multiple sources and data-formats (i.e IETF context for IP or T-API context for Optical) to create a common view of the network. The models used to create the multi-layer topology were:
 \begin{itemize}
-    \item The context of the optical layer topology MUST already be known by the SDTN controller.
-    \item The context of optical services MUST be known by the SDTN controller.
-    \item The context of the IP layer topology MUST be already known by the SDTN controller.
+    \item For the optical domain representation: Topology and Connectivity Service modules. Those models provides information for layers from L0 to L2.
+    \item For the IP/MPLS domain representation:  The \texttt{ietf-network:networks} is the basic to expose the network model(nodes and IP Links), and the \texttt{.../node/nt:termination-point}
+    were used to expose the Terminations-points (Ports) of a specific node.
 \end{itemize}
+    
+Additionally, a correlation parameter were defined to to join the IP and Optical layers. This parameter is the \texttt{plug-id}. This additional definition were needed becasuse there is no a dynamic protocol or common element between the ONF/IETF standards that would allow their correlation. The \texttt{plug-id} parameters were added in the IETF termination points and in the TAPI Connectivity Services. 
 
-The SBI for this use case base in the IP part representation is supported on the RFC8345. In this RFC, a basic network representation is done using an abstract network model (“ietf-network”) with the set of parameters described in the (4.1.3 subsection). These parameters are common for all the networks described in this document (L1, L2, L3, and UNI), by means of augmentation.  
+It os necessary to remark in the T-API model side the Plug-id parameter is a "String" and in the IETF side is "Binary", therefore the SDTN controller MUST have the ability to traduce the “Binary” value to “String” or vice versa, to be able to make the match in the correlation process considered to be standardized.
 
-Our detail proposal as follows: 
+To fill the Plug-id attribute automatically between the layers, it is required that the SDTN performs a process based on meta-heuristic algorithms. In which, the performance data at termination-points level both in the IP and in the Optical layers are correlated. Clock \& Time must be perfectly synchronized between the Tx/Rx points, bidirectionally. Meta-heuristics must include the geo-location parameter of the nodes as input. However, the design of this process is currently under study and is based on real-time information that can be delivered by the telemetry engines.
 
-In the RFC8345 (generic network) it’s considered to use the supporting-termination-point through the
-\\ \textit{ietf-network:termination-point={tp-id}} attribute.
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/ip_topology_workflow_2.png}
+	\caption{Message Interchange for IP Topology Discovery}
+	\label{FIG:ip_topology_workflow}
+\end{figure}
 
-\begin{lstlisting}[basicstyle=\ttfamily\small,label=tps,caption=Supporting termination point Structure]
-/nw:networks/nw:network/nw:node:
-    +--rw termination-point* [tp-id]
-    +--rw tp-id 
-    +--rw supporting-termination-point
-       +--rw network-ref
-       +--rw node-ref
-       +--rw tp-ref
-\end{lstlisting}
-
-Where the supporting-termination-point represents another termination point in an underlay network. Considering this, the list of attributes will show the next information: 
-\begin{itemize}
-    \item The \textit{network-ref} references an underlay network, where the supporting Network for this case specifically must be \textbf{l1-topology}.
-    \item \textit{Node-ref} represents a node in an underlay network, where the supporting node name must be the node-id in the \textbf{l1-topology}.
-    \item \textit{Tp-ref} references the underlay terminal point itself. The supporting termination point must be \textit{tp-id} in the in the \textbf{l1-topology}.
-\end{itemize}
-
-To fill the Plug-id attribute automatically between the layers, it is required that the SDTN performs a process based on meta-heuristic algorithms. In which, the performance data at terminal-points level both in the IP and in the Optical layers are correlated. Clock \& Time must be perfectly synchronized between the Tx/Rx points, bidirectionally. Meta-heuristics must include the geo-location parameter of the nodes as input. However, the design of this process is currently under study and is based on real-time information that can be delivered by the telemetry engines.
-
-There are functional requirements that the SDTN controller must meet:
-\begin{itemize}
-    \item The SDTN Controller MUST have an interface to create multi-layer links.
-    \item The SDTN controller MUST be responsible to assign the link-id.
-\end{itemize}
-It’s necessary to remark in the T-API model side the Plug-id parameter is a "String" and in the IETF side is "Binary", therefore the SDTN controller MUST have the ability to traduce the “Binary” value to “String” or vice versa, to be able to make the match in the correlation process considered to be standardized.
-
-Finally, for the construction of the multi-layer topology, it is necessary to perform the process by layers satisfying the prerequisites, in which the SDTN will perform the task of correlating the values that until now will be filled manually in the plug-id attributes in IP and Optical layers. The process proposed is depicted as workflow in \ref{FIG:ip_topology_workflow}.
+In this work, the construction of the multi-layer topology, the SDTN performed the task of value correlation between layers, using manually filled "plug-id" attributes in IP and Optical layers. The process proposed is depicted as workflow in \cref{FIG:ip_topology_workflow}.
 
 %\begin{figure}
 %	\centering
@@ -530,13 +492,21 @@ Finally, for the construction of the multi-layer topology, it is necessary to pe
 \section{Field Trial Environment for iFusion SDTN Demonstration}
 \label{section:trial}
 
-We have deployed a field trial environment for demonstrating, testing and evaluating the end-to-end multi-domain cases and the SDN-based iFusion Architecture. We describe the two main layers which compose the field trial. Fistly, a \textit{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \textit{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
+A field trial environment to demonstrate, test and evaluate the end-to-end multi-domain cases and the SDN-based iFusion Architecture were developed. It has two main layers: Fistly, a \hyperref[sec:contol_lay]{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \hyperref[sec:net_lay]{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
 
 \subsection{Control Layer}
-A hierarchical SDTN architecture is built upon the reference design guidelines described in Section 2. Infinera Trascend Maestro\footnote{https://www.infinera.com/solutions/intelligent-automation/}, acting as SDTN controller, orchestrates four (4) SDN-C one for each domain.
-From the IP control perspective, SDN-Cs communicate with NEs via NETCONF/YANG with the OpenConfig data models and RESTconf with SDTN. As explained in Section 4.3.1, we have extended the end-to-end signalling building a seamless MPLS multi-domain IP/MPLS network. In other hand, from the Optical perspective, SDN-Cs follow a similar integration. At SBI, OpenROADM + OPenConfig models are used on top of NETconf/YANG protocol. At NBI, a T-API implementation is used.  
+\label{sec:contol_lay}
+A hierarchical SDTN architecture is built upon the reference design guidelines described in \cref{section:arq}. The kay elements of the control layer was:
+\begin{itemize}
+    \item Infinera Trascend Maestro, acting as SDTN controller.
+    \item 2 x IP Domain Controllers one for each cluster.
+    \item 2 x Optical Domain Controllers one for each cluster.
+\end{itemize}
+
+From the IP control perspective, SDN-Cs communicate with NEs via NETCONF/YANG and RESTCONF/YANG with SDTN.  In other hand, from the Optical perspective, SDN-Cs follow a similar integration. At SBI, OpenROADM + OPenConfig models are used on top of NETconf/YANG protocol. At NBI, a T-API implementation is used.  
 
 \subsection{Network Layer}
+\label{sec:net_lay}
 We use a scale representation in terms of quantity of equipment but a full network field trial with all the hierarchical layers that compose a Service Provider real deployment. In our notation and architecture the IP/MPLS-base network is comprised of five (5) layer with the following responsibilities: 
 \begin{itemize}
     \item HL1: Core P/PE-Routers acting as Toll Gates for interconnection the Service Provider to the International Exit and using eBGP logical structure for publishing public IPv4/IPv6 prefixes to IP gates from and to a Tier-1/2 international Internet provider.
@@ -546,9 +516,21 @@ We use a scale representation in terms of quantity of equipment but a full netwo
     \item HL5: Provides connectivity access to corporations, enterprises, small businesses and mobile terminal nodes (BTS, NodeB, eNodeB) in remote areas. Formerly known as cell site routers in Mobile Service Providers, but now evolved and converged to serve multiple fixed plus mobile segments.     
 \end{itemize}
 
-Four (4) IP/MPLS-based network links are transported by a two-vendor WDM underlying infrastructure. Fig. ~\ref{FIG:field_trial_ip} depicts in purple the four interlinks 2x100Gb and 2x10Gb.  
+The IP/MPLS network was build using seamless MPLS option-C. The Networks is organised by clusters and rings within. Each IP cluster groups devices of a specific vendor. As a seamless MPLS the underlay signalling requires that every origin PE-Routers (HL4) from a cluster, can establish an end-to-end LSP to the destination PE-Router(HL4) even if the destionation belongs to a different cluster. 
 
-Regarding the optical transport infrastructure, we have built a dual-plane independent metropolitan WDM networks. Comprised of a ring of (4) four nodes each with nx100Gb and nx10Gb lambda capacity. Fig. ~\ref{FIG:field_trial_ip} illustrates the optical WDM part of the field trial enviroment.
+Thus the HL3 routers from each region establish an eBGP session against the Core-Routers (HL2). This session exports the Router-ID plus Label information of all the routers in the region using BGP-LU \cite{rfc8277}. Additionally, there is another eBGP session between the HL3 of the region and the core Router-Reflectors to export the VPNv4 routes from each VPN service. This eBGP session requires a mandatory a Next-Hop-Unchanged configuration to avoid network loops or misconfigured paths. All of this control plane setup allows the creation of an end-to-end LSP from the access layer to the platforms without changing the configuration during the service provisioning.
+
+Additionally, to deploy any of this service the network has to fulfill the following basic requirements established between origin and destination:
+\begin{itemize}
+    \item PEs connectivity based on IGP Router-ID/Loopback reachability.
+    \item Label switching protocol enabled. MPLS and Labelling mechanism LDP, RVSP, other. 
+    \item MP-BGP sessions between the PEs (address-family vpnv4/6, ipv4/6).
+    \item Virtual Routing network instance. 
+\end{itemize}
+
+Four (4) IP/MPLS-based network links are transported by a two-vendor WDM underlying infrastructure. \Cref{FIG:field_trial_ip} depicts in purple the four interlinks 2x100Gb and 2x10Gb.  
+
+Regarding the optical transport infrastructure, we have built a dual-plane independent metropolitan WDM networks. Comprised of a ring of (4) four nodes each with nx100Gb and nx10Gb lambda capacity. \Cref{FIG:field_trial_ip} illustrates the optical WDM part of the field trial enviroment.
 
 
 \section{Test Results}
@@ -556,7 +538,7 @@ Regarding the optical transport infrastructure, we have built a dual-plane indep
 
 Test results for the Hierarchical SDTN Controller integration with the third-party vendor SDN-C controllers in the Optical and IP domains are presented in this section. Two types of tests have been done in order to demonstrate orchestration functionalities in the multi-layer/multi-domain/multi-vendor network environment, previously described: a) One of them involves the use of Postman as an emulated OSS tool, to send API-based queries towards each of the SDN-Cs, as well as to retrieve the network information as exposed by the domain controllers; b) the second type of test consisted on using Transcend Maestro Web Portal GUI for a user-friendly visualization of the use case deployment.
 
-Table ~\ref{TAB:tested_use_cases} shows the uses cases tested on the network scenario, these have been classified into three main categories: Topology discovery, IP service provisioning and Optical service provisioning. A general overview and the results obtained for each of them are approached individually in further sub-sections of this chapter. Regarding the single-domain use cases, results are shown independently for each vendor and for each network domain in particular.
+\Cref{TAB:tested_use_cases} shows the uses cases tested on the network scenario, these have been classified into three main categories: Topology discovery, IP service provisioning and Optical service provisioning. A general overview and the results obtained for each of them are approached individually in further sub-sections of this chapter. Regarding the single-domain use cases, results are shown independently for each vendor and for each network domain in particular.
 
 \begin{table*}
 	\caption{List of Multi-Layer Multi-Domain Tested Use Cases}
@@ -583,20 +565,13 @@ The following steps take part of the end-to-end network discovery procedure:
     to achieve this purpose, such as TTI for OTU links, IP addresses for IP links etc. If all the data required for full inter-domain and inter-layer link discovery is not reported by the third-party controllers, external data can be fed in via the SDTN NBI. 
 \end{enumerate}
 
-Starting with the Optical Domain, a set of T-API version 2.1 queries were sent in order to build the topology by extracting the list of networks as well as topology details such as nodes, links, connections and service-interface-points available. The query exchange process between is shown in the UML diagram depicted in Figure ~\ref{FIG:optical_topology_workflow}.  
+Starting with the Optical Domain, a set of T-API version 2.1 queries were sent in order to build the topology by extracting the list of networks as well as topology details such as nodes, links, connections and service-interface-points available. The query exchange process between is shown in the UML diagram depicted in \cref{FIG:optical_topology_workflow}.  
 
-Regarding the IP Domain, to obtain the whole network topology, a query to the controller’s NBI to retrieve the network topologies available for all layers is sent; from here on, the client must perform per-layer queries to get more detailed information such as nodes, termination points of nodes, links, etc. Figure ~\ref{FIG:ip_topology_workflow} displays the RESTCONF based queries\footnote{Given that none of the IP SDN-C are using standard IETF RESTCONF YANG data models, the API queries sent towards the IP controller may vary depending on the model which has been implemented. } in UML format for the topology retrieval in the IP Domain. 
-
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/ip_topology_workflow_2.png}
-	\caption{Message Interchange for IP Topology Discovery}
-	\label{FIG:ip_topology_workflow}
-\end{figure}
+Regarding the IP Domain, to obtain the whole network topology, a query to the controller’s NBI to retrieve the network topologies available for all layers is sent; from here on, the client must perform per-layer queries to get more detailed information such as nodes, termination points of nodes, links, etc. \Cref{FIG:ip_topology_workflow} displays the RESTCONF based queries in UML format for the topology retrieval in the IP Domain. 
 
 At this point, no interdomain links were retrieved since there is no automatic mechanism supported on the domain controllers to expose information such as TTI (on the Optical Domain), LLDP (on the IP Domain) or Plug-id (for both domains); therefore Plug-id based link discovery was simulated by adding user defined Plug-Id values to each port or at least to each domain edge port manually with the use of python scripting. The inputted plug-id data was automatically detected by the SDTN and the inter-domain links between ports with matching plug-ids were created, resulting in a complete multi-layer/multi-domain end-to-end topology as seen from the SDTN GUI.
 
-The number of discovered elements within the end-to-end network topology is summarized in Table ~\ref{TAB:discovered_elements}, for the optical domains in particular, the number of nodes for each topology correlates to the different layers such as:
+The number of discovered elements within the end-to-end network topology is summarized in \cref{TAB:discovered_elements}, for the optical domains in particular, the number of nodes for each topology correlates to the different layers such as:
 PHOTONIC\_MEDIA LAYER, DSR LAYER and ODU LAYER as defined in the YANG data model for T-API 2.1, hence the reason why there are more nodes retrieved other than those which are physically implemented in the testbed scenario. Additionally, the service interface points (SIPs) discovered for the Optical Domain are exposed in the Controllers NBI, making it easier for the SDTN to access these parameters and using them for future service provisioning. 
 
 In the IP domain however, given the different models implemented on the IP Controllers, the service end-points were not exposed to the SDTN SBI, reason why the interfaces and ports were needed to be configured manually via python scripting, being this a drawback when it comes to working with models which don’t follow a fully standardized model.
@@ -659,9 +634,9 @@ This use case has been tested using a single IP Controller and using the L2SM mo
 	\label{FIG:L2SM_workflow}
 \end{figure}
 
-The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{FIG:L2SM_workflow}. The four POST requests described previously and their equivalent GET requests exchanged between the SDTN and the IP-SDN controller are included. 
+The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \cref{FIG:L2SM_workflow}. The four POST requests described previously and their equivalent GET requests exchanged between the SDTN and the IP-SDN controller are included. 
 
-\ref{FIG:L2SM_results} shows the L2VPN service creation results as seen from the SDTN GUI, where three information panes are included: 
+\Cref{FIG:L2SM_results} shows the L2VPN service creation results as seen from the SDTN GUI, where three information panes are included: 
 \begin{itemize}
     \item Configured NEs in the network map. The yellow ones include the two service end-points.
     \item List of all the services of a common type. In this case VPLS service was selected. 
@@ -678,7 +653,7 @@ The workflow between the SDTN and the IP Controller has been summarized in the U
 
 \subsection{Multi-domain IP L3VPN provisioning}
 
-Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN solution, a scenario for an L3VPN service configuration was proposed. The main goal was to create a L3VPN between two access routers, each of them located in different IP domains. The IP domains are connected using a DWDM optical network. Depicted in Figure \ref{}. The L3VPN service was created using the SDTN GUI and the configuration parameters used for this matter are shown on Table \ref{TAB:discovered_ip_l3vpn}.
+Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN solution, a scenario for an L3VPN service configuration was proposed. The main goal was to create a L3VPN between two access routers, each of them located in different IP domains. The IP domains are connected using a DWDM optical network. Depicted in \cref{FIG:field_trial_optical}. The L3VPN service was created using the SDTN GUI and the configuration parameters used for this matter are shown on Table \cref{TAB:discovered_ip_l3vpn}.
 
 \begin{table*}[]
 \caption{Configuration Parameters for L3VPN}
@@ -710,15 +685,7 @@ When creating the service in a multi-domain and multi-vendor scenario, some of t
     \item Differences in the maximum length size allowed on some configuration parameters (description, SNA names, etc.).
 \end{itemize}
 
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/l3vpn_workflow.png}
-	\caption{Messages Interchange for IP multi-domain L3VPN service creation.}
-	\label{FIG:l3vpn_workflow}
-\end{figure}
-
-
-The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \ref{}.
+The workflow between the SDTN and the IP Controller has been summarized in the UML model presented on \cref{FIG:l3vpn_workflow}.
 
 \begin{figure}
 	\centering
@@ -727,7 +694,7 @@ The workflow between the SDTN and the IP Controller has been summarized in the U
 	\label{FIG:l3vpn_results}
 \end{figure}
 
-Once these sorts of restrictions were overcome, the procedure for creating the L3VPN from the SDTN GUI was successful. \ref{FIG:l3vpn_results} shows the two visualization options provided by the SDTN. First, a per layer view of the end-to-end IPVPN service created, or the service route as seen from the network topology view.
+Once these sorts of restrictions were overcome, the procedure for creating the L3VPN from the SDTN GUI was successful. \Cref{FIG:l3vpn_results} shows the two visualization options provided by the SDTN. First, a per layer view of the end-to-end IPVPN service created, or the service route as seen from the network topology view.
 
 \begin{figure}
 	\centering
@@ -736,12 +703,13 @@ Once these sorts of restrictions were overcome, the procedure for creating the L
 	\label{FIG:counters}
 \end{figure}
 
-The configuration of the IP L3VPN service in the network elements was verified by using their CLI as well as the IP-SDN controllers GUI. A traffic generator was used in site to introduce traffic on both ends of the network and test the functionality of the multi-domain L3VPN service created.\ref{FIG:counters} shows the traffic statistics as seen on the CLI of the routers.
+The configuration of the IP L3VPN service in the network elements was verified by using their CLI as well as the IP-SDN controllers GUI. A traffic generator was used in site to introduce traffic on both ends of the network and test the functionality of the multi-domain L3VPN service created.\cref{FIG:counters} shows the traffic statistics as seen on the CLI of the routers.
 
 \subsection{Optical provisioning}
-From the perspective of the optical networks, single domain unconstrained DSR connectivity services as well as Photonic Media Layer services were independently configured in both vendors’ DWDM networks and were verified in the respective NMS systems. The ONF T-API 2.1 YANG data model has been used for the query exchange between the SDTN HCO and the optical domain controllers given the support of this standard model in their NBIs. The UML diagram on Figure ~\ref{FIG:optical_provisioning_workflow} shows the HTTP POST request involved in the optical circuit creation as sent from the SDTN HCO towards the Optical SDNCs, as well as the HTTP GET requests for information retrieval regarding particular connectivity services existing on the network. 
+From the perspective of the optical networks, single domain unconstrained DSR connectivity services as well as Photonic Media Layer services were independently configured in both vendors’ DWDM networks and were verified in the respective NMS systems. The ONF T-API 2.1 YANG data model has been used for the query exchange between the SDTN HCO and the optical domain controllers given the support of this standard model in their NBIs. The UML diagram on \Cref{FIG:optical_provisioning_workflow} shows the HTTP POST request involved in the optical circuit creation as sent from the SDTN HCO towards the Optical SDNCs, as well as the HTTP GET requests for information retrieval regarding particular connectivity services existing on the network. 
 
 The DSR connectivity services created in both optical domains range from 1GbE, to 10GbE and 100GbE, all of them configured by using the API Client as well as the SDTN HCO GUI. A total of 3x10GbE and 4x100GbE DSR connectivity services were provisioned simultaneously on Optical Domain A whereas given the network resources available in the Optical Domain B, a 1GbE service as well as 2x10GbE services were provisioned. When it comes to photonic media type of services, 100GbE and 200GbE could be provisioned for Optical Domain A and B respectively. 
+
 First, the API Client was used to send the E2E DSR Service creation query towards the SDNCs. For this, parameters\footnote{Parameters included in the body script for the service creation; other important ones include “service-interface-point”, “layer-protocol-name”, “service-layer” as well as the service “name” and a unique identifier “uuid”.} such as “service-interface-point”, “capacity” and “layer-protocol-qualifier” embedded in the POST body script needed to be correctly identified prior to sending the service creation petition, being that they depend strictly on the installed equipment and the resources available in the network; and therefore, when configured improperly, it led to the failure of the service creation, or to the misconfiguration on the controller’s side. When sending the POST query from the SDTN HCO towards the Optical Controllers, an HTTP 202 Accepted notification is returned by the SDNC, meaning the controller has accepted the petition and would proceed with the service creation, otherwise, an HTTP 400 Bad Request notification would be retrieved in case the petition was not accepted by the controller. 
 
 \begin{figure}
@@ -751,14 +719,15 @@ First, the API Client was used to send the E2E DSR Service creation query toward
 	\label{FIG:optical_provisioning_workflow}
 \end{figure}
 
-Additionally, from the API client tests, it was noted that even if both controllers are standard-based and implement T-API 2.1 in their NBIs, the modelling of some attributes is different from one another. From comparing the results retrieved via the API Client, naming attributes for some of the objects\footnote{SIP\_NAME” in contrast to "INVENTORY\_ID", "CONN\_NAME" in contrast to "CONNECTION\_NAME", among others}, as well as the general modelling of the connections in regards of the route for an optical circuit was noticed to be different. Likewise, the site names in one of the optical controllers did not coincide with the real name of the site but were based on an encoding made it by the controller itself. Also, when using the SDTN HCO GUI to create the e2e connectivity services within the two network domains; this particular discrepancy was also visible via the multilayer view of the services created, as seen on Figure W where the different layers for a 1GbE service are shown as exposed by the optical domain controller B, while on Figure ~\ref{FIG:optical_provisioning_result} a multilayer view of 10GbE service created on Optical Controller A is shown.
-
 \begin{figure}
 	\centering
 		\includegraphics[width=\linewidth]{figs/optical_provisioning_result.png}
 	\caption{Optical Provisioning Result for a Multi-Layer 10GbE Service}
 	\label{FIG:optical_provisioning_result}
 \end{figure}
+
+Additionally, from the API client tests, it was noted that even if both controllers are standard-based and implement T-API 2.1 in their NBIs, the modelling of some attributes is different from one another. From comparing the results retrieved via the API Client, naming attributes for some of the objects\footnote{SIP\_NAME” in contrast to "INVENTORY\_ID", "CONN\_NAME" in contrast to "CONNECTION\_NAME", among others}, as well as the general modelling of the connections in regards of the route for an optical circuit was noticed to be different. Likewise, the site names in one of the optical controllers did not coincide with the real name of the site but were based on an encoding made it by the controller itself. Also, when using the SDTN HCO GUI to create the e2e connectivity services within the two network domains; this particular discrepancy was also visible via the multilayer view of the services created, as seen on \cref{FIG:optical_provisioning_workflow} where the different layers for a 1GbE service are shown as exposed by the optical domain controller B, while on \cref{FIG:optical_provisioning_result} a multilayer view of 10GbE service created on Optical Controller A is shown.
+
 
 \section{Conclusions and Future Work}
 \label{section:conclusions}
@@ -785,7 +754,8 @@ This is work has been supported by Telefonica I+D as part of the Fusion, iFusion
 
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
-\bibliographystyle{cas-model2-names}
+%\bibliographystyle{cas-model2-names}
+\bibliographystyle{ieeetr}
 
 % Loading bibliography database
 \bibliography{bibliography}
