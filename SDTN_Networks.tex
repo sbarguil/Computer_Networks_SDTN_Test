@@ -156,28 +156,26 @@ This agile methodologies, would take small network task and solve it using a pro
 
 In this article a field trial of an hybrid SDN architecture for a service provider is described. The field trial includes multiple network controllers (two for IP/MPLS and two for DWDM) and a real-commercial-multivendor-operative network. This work proves the viability of the implementations of programmable network interfaces using common standard models and protocols.
 
-The paper is structured as follows, \cref{section:arq} describes the iFusion SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Then, \cref{section:net} details the principles of the Network programmability, including concepts of YANG and protocols used within the tests. Section \cref{section:models} describes the service models used for IP/Optical service provision and topology. Next, \cref{section:trial} details the test architecture, including commercial network controllers. At he end, \cref{section:results} detailed the results obtained in this implementation. Finally,  \cref{section:conclusions} resume the conclusion of the present work and what we envision as the next steps.    
+The paper is structured as follows, \cref{section:arq} describes the i\uppercase{FUSION} SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Then, \cref{section:net} details the principles of the Network programmability, including concepts of YANG and protocols used within the tests. Section \cref{section:models} describes the service models used for IP/Optical service provision and topology. Next, \cref{section:trial} details the test architecture, including commercial network controllers. At he end, \cref{section:results} detailed the results obtained in this implementation. Finally,  \cref{section:conclusions} resume the conclusion of the present work and what we envision as the next steps.    
 
 \section{SDN Architecture}
 \label{section:arq}
 
-\uppercase{iFUSION} is a reference model architecture defined to support network automation and programability in a service provider environment. iFUSION defines a clear separation between network and service layers.  The \uppercase{iFUSION} main principles include the use of:
+i\uppercase{FUSION} is a reference model architecture defined to support network automation and programability in a service provider environment. i\uppercase{FUSION} defines a clear separation between network and service layers.  The i\uppercase{FUSION} main principles include the use of:
 \begin{itemize}
     \item Standard North bound interfaces (NBI) leveraging on \uppercase{RESTconf/YANG} \cite{bierman2017restconf}.
     \item Standard Configuration South bound interfaces (SBI) leveraging on \uppercase{NETCONF/YANG} \cite{enns2011network}.
     \item YANG data models based on latest developments in the standards-development organizations (SDOs) \cite{bjorklund2016yang}: \uppercase{IETF}, \uppercase{ONF} and \uppercase{OpenConfig}.
 \end{itemize}
 
-The proposed architecture can be shown in terms of components and relationship among them, as depicted in \cref{FIG:1}. 
-
 \begin{figure*}
 	\centering
 		\includegraphics[width=\linewidth]{figs/ifusion_architecture.png}
-	\caption{iFUSION architecture}
+	\caption{i\uppercase{FUSION} architecture}
 	\label{FIG:1}
 \end{figure*}
 
-The key elements of the SDN iFUSION architecture are the following:
+The key elements of the SDN i\uppercase{FUSION} architecture are the following:
 
 \begin{itemize}
 \item \textbf{SDN Domain}: It is a set of network elements under the supervision of the same SDN Controller. There are several possible levels in the decoupling of control and data planes. The preferred level of decoupling in Telefonica depends on the network technology. For example, in the case of MPLS, the network element runs the distributed protocols (e.g. IS-IS TE, RSVP-TE) and the controller only needs to configure it.
@@ -195,7 +193,7 @@ The key elements of the SDN iFUSION architecture are the following:
 \item \textbf{Service SDN controller}: An additional SDN layer that takes into account services might be needed. 
 \end{itemize}
 
-The iFUSION architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP} and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller.
+The i\uppercase{FUSION} architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP} and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller. The proposed architecture can be shown in terms of components and relationship among them, as depicted in \cref{FIG:1}. 
 
 The Software Defined Transport Network (SDTN) Controller is responsible to orchestrate the respective SDN Domain controllers (SDN-C) within the transport segment (IP, Optical and MW) through the Domain Controllers\'NBI, providing an end-to-end transport network vision. The SDTN Controller aggregates demands from the management and services layer exposing a unified NBI which should provide resource configuration abstraction and technology agnostic service definition. 
 
@@ -246,7 +244,7 @@ Without line-side interoperability of the different WDM transceivers and Reconfi
 With this in mind, in the short term, Optical SDN-C are expected to provide network programmability and interoperability towards upper layers (multi-layer) and between vendors (multi-domain, multi-vendor) through the support of standard NBIs (i.e. coordination will be provided by upper layer hierarchical SDTN). This short term approach will enable the setup and tear down of connections in optical channels (OCh and ODU layers), the discovery of the network resources to compose a layered uniform view based on the OTN hierarchy, and the monitoring of the optical network.
 
 The Hybrid SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has been already deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, beneficing the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) \cite{lopez2016transport} and IETF models \cite{wu2017service} are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
-iFUSION relays on ONF Transport API 2.1 as as the reference NBI for the SDN implementation in the optical transport segment, having been experimented in several proof of concepts \cite{mayoral2016first,mayoral2017control,bravalheri2019vnf}. 
+i\uppercase{FUSION} relays on ONF Transport API 2.1 as as the reference NBI for the SDN implementation in the optical transport segment, having been experimented in several proof of concepts \cite{mayoral2016first,mayoral2017control,bravalheri2019vnf}. 
 
 In the medium and long term, the direct programmability of the components can have interest in Point-To-Point, Metro and Regional scenarios, where disaggregation of optical transceivers and line side components can play an important role. In this line, OpenROADM \cite{oda2016learning,kundrat2019opening} and OpenConfig \cite{shaikhopenconfig} projects have already defined device configuration models for transponders and open line systems. Telefonica is approaching this transformation of the optical control in two phases:
 
@@ -496,10 +494,10 @@ At this point, no inter-domain links were retrieved since there is no automatic 
 	\label{FIG:field_trial_optical}
 \end{figure*}
 
-\section{Field Trial Environment for iFusion SDTN Demonstration}
+\section{Field Trial Environment for i\uppercase{FUSION} SDTN Demonstration}
 \label{section:trial}
 
-A field trial environment to demonstrate, test and evaluate the end-to-end multi-domain cases and the SDN-based iFusion Architecture were developed. It has two main layers: Fistly, a \hyperref[sec:contol_lay]{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \hyperref[sec:net_lay]{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
+A field trial environment to demonstrate, test and evaluate the end-to-end multi-domain cases and the SDN-based i\uppercase{FUSION} Architecture were developed. It has two main layers: Fistly, a \hyperref[sec:contol_lay]{Control Layer} is comprised of two SDN IP Domain Controllers for a multivendor IP/MPLS network using as underlying WDM infrastructure and working in parallel with two SDN Optical Domain Controllers. On top of that, a multilayer multidomain SDTN Controller is orchestrating the uses cases. Secondly, the \hyperref[sec:net_lay]{Network Layer} is comprised of a Metropolitan WDM Network with nx100Gb Lambda capacity providing interlink capabilities for a multidomain IP/MPLS network following a hierarchical architecture that we denominate from HL1 (Hierarchical Layer No. 1) to HL5. We detail each of the layers in the next subsections. 
 
 \subsection{Control Layer}
 \label{sec:contol_lay}
@@ -744,7 +742,7 @@ Additionally, the scope of this work can be extended to cover Traffic Engineerin
 \printcredits
 
 \section*{Acknowledgements}
-This is work has been supported by Telefonica I+D as part of the Fusion, iFusion, and OpenFusion projects. Authors would like to thank to all the SDN technical teams and leaders that participate in the development, deployment, and testing of this SDTN architecture. Many thanks for their contributions to Manuel Santiago, Gloria Gomez, Julia Rodriguez and Zdravko Stevkovski from Infinera, Randy Quimbay, David Rocha from Telefonica Colombia, and Andrea Valencia, Juan Suarez, Juan Agredo and Daniel Hernandez from Wipro.   
+This is work has been supported by Telefonica I+D as part of the Fusion, i\uppercase{FUSION}, and OpenFusion projects. Authors would like to thank to all the SDN technical teams and leaders that participate in the development, deployment, and testing of this SDTN architecture. Many thanks for their contributions to Manuel Santiago, Gloria Gomez, Julia Rodriguez and Zdravko Stevkovski from Infinera, Randy Quimbay, David Rocha from Telefonica Colombia, and Andrea Valencia, Juan Suarez, Juan Agredo and Daniel Hernandez from Wipro.   
 
 %% Loading bibliography style file
 %\bibliographystyle{model1-num-names}
@@ -765,8 +763,12 @@ Samier Barguil (M.Sc. 2018). PhD Candidate from the Universidad Autonoma de Madr
 Víctor López (M.Sc. 2005 - Ph.D. 2009) is a Technology Expert at Systems and Network Global Direction in Telefónica gCTIO. He works on the global IP and transport processes of the Telefonica group. He serves as co-chair at the Open Optical Packet Transport group in the Telecom Infra Project. He has co-authored more than 200 publications, six patents and contributed to IETF and ONF. Moreover, he is the editor of the book Elastic Optical Networks: Architectures, Technologies, and Control (308 pages, Springer 2016). His research interests include the integration of Internet services over IP/MPLS and optical networks and control plane technologies (PCE, SDN, GMPLS).
 \endbio
 
-\bio{}
-Author biography with author photo.
+\bio{figs/Edward_Echeverry_v2.jpg}
+Edward Echeverry is Head Of Transport (IP and Optical Network) in Telefonica Colombia. Electronic Engineer, Telecommunications Specialist with a 15+ years of experience in the field. High technical skills and advanced experience in the design, planning and implementation of 3G/4G mobile, IP/MPLS and new generation optical networks, as well as in management and deployment of projects. Lead PoC concept tests of an end-to-end SDTN system including the different layers of IP \& Optical transport network that allowed us to define the use cases of topology and services L1/L2/L3. The tests looked at the use of SBI/NBI T-API IETF-Based interfaces. His research interests include emerging network automation technologies and SDTN architectures.
+\endbio
+
+\bio{figs/janne_karvonen_640x640.jpg}
+Janne Karvonen (M.Sc.(Tech.) 1993 Helsinki University of Technology) is a Senior Software Architect at Infinera Corporation. He works in the Systems Architecture Group, focusing on Software Defined Networking Technologies and IP/MPLS Network Management Systems. He has over 30 years of experience in Software Engineering and more than 20 years of experience in Telecommunications Network Management Systems, covering both optical and packet based technologies. His research interests include SDN technologies for multi-layer, multi-domain and multi-vendor networks, with special focus on SDN API technologies, Multi-Layer Path Computation Algorithms and utilization of Machine Learning in SDN networks.
 \endbio
 
 \end{document}
