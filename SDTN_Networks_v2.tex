@@ -759,13 +759,13 @@ From the perspective of the optical networks, single domain unconstrained DSR co
 The DSR connectivity services created in both optical domains range from 1 GbE to 10 GbE and 100 GbE, all of them configured using the API Client as well as the SDTN HCO GUI. A total of 3 x 10 GbE and 4 x 100 GbE DSR connectivity services were provisioned simultaneously  in optical domain A, whereas given the network resources available in optical domain B, a 1G bE service as well as 2 x 10GbE services were provisioned. When it comes to photonic media-type services, 100 GbE and 200 GbE could be provisioned for optical domain A and B respectively. 
 
 First, the API client was used to send the end-to-end DSR service creation query towards the SDN-Cs. For this creation the parameters includes: 
-\begin{itemize}
+\begin{enumerate}
     \item A unique identifier \texttt{uuid}.
-    \item \texttt{service-interface-point}:
-    \item \texttt{layer-protocol-name}:
-    \item \texttt{service-layer}:
-    \item \texttt{service name}:
-\end{itemize}
+    \item \texttt{service-interface-point}
+    \item \texttt{layer-protocol-name}
+    \item \texttt{service-layer}
+    \item \texttt{service name}
+\end{enumerate}
 
 Additional parameters such as \texttt{service-interface-point}, \texttt{capacity} and the \texttt{layer-protocol-qualifier} needed to be correctly identified prior to sending the service creation petition, being that they depend strictly on the installed equipment and the resources available in the network.
 
