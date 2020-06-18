@@ -156,7 +156,7 @@ This agile methodologies, would take small network task and solve it using a pro
 
 In this article a field trial of an hybrid SDN architecture for a service provider is described. The field trial includes multiple network controllers (two for IP/MPLS and two for DWDM) and a real-commercial-multivendor-operative network. This work proves the viability of the implementations of programmable network interfaces using common standard models and protocols.
 
-The paper is structured as follows, \cref{section:arq} describes the i\uppercase{FUSION} SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Then, \cref{section:net} details the principles of the Network programmability, including concepts of YANG and protocols used within the tests. Section \cref{section:models} describes the service models used for IP/Optical service provision and topology. Next, \cref{section:trial} details the test architecture, including commercial network controllers. At he end, \cref{section:results} detailed the results obtained in this implementation. Finally,  \cref{section:conclusions} resume the conclusion of the present work and what we envision as the next steps.    
+The paper is structured as follows, \cref{section:arq} describes the i\uppercase{FUSION} SDN reference architecture defined by Telefonica. This architecture was defined to evolve Telefonica's network in the following years. Then, \cref{section:net} details the principles of the Network programmability, including concepts of YANG and protocols used within the tests. Section \cref{section:models} describes the service models used for IP/Optical service provision and topology. Next, \cref{section:trial} details the test architecture, including commercial network controllers. At he end, \cref{section:results} detailed the results obtained in this implementation. Finally, conclusions and perspectives are drwan in \cref{section:conclusions}.    
 
 \section{SDN Architecture}
 \label{section:arq}
@@ -171,7 +171,7 @@ i\uppercase{FUSION} is a reference model architecture defined to support network
 \begin{figure*}
 	\centering
 		\includegraphics[width=\linewidth]{figs/ifusion_architecture.png}
-	\caption{i\uppercase{FUSION} architecture}
+	\caption{i\uppercase{FUSION} architecture has two control layers. The first one having the SDTN controller with the end-to-end view of the network. Second control layer includes the SDN Domain controllers. Those controllers interact with the Network devices (Fusion Network).}
 	\label{FIG:1}
 \end{figure*}
 
@@ -193,7 +193,7 @@ The key elements of the SDN i\uppercase{FUSION} architecture are the following:
 \item \textbf{Service SDN controller}: An additional SDN layer that takes into account services might be needed. 
 \end{itemize}
 
-The i\uppercase{FUSION} architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP} and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller. The proposed architecture can be shown in terms of components and relationship among them, as depicted in \cref{FIG:1}. 
+GMThe i\uppercase{FUSION} architecture is designed as a hierarchical model where each network segment is controlled by a dedicated SDN Domain controller. The transport network, due to its wide scope and complexity, is divided in three main technology domains: \hyperref[section:ip]{IP} and \hyperref[section:dwdm]{Optical} for transmission and a Software Defined Transport Network \hyperref[section:sdtn]{SDTN} controller. The proposed architecture can be shown in terms of components and relationship among them, as depicted in \cref{FIG:1}. 
 
 The Software Defined Transport Network (SDTN) Controller is responsible to orchestrate the respective SDN Domain controllers (SDN-C) within the transport segment (IP, Optical and MW) through the Domain Controllers\'NBI, providing an end-to-end transport network vision. The SDTN Controller aggregates demands from the management and services layer exposing a unified NBI which should provide resource configuration abstraction and technology agnostic service definition. 
 
@@ -214,7 +214,7 @@ IP networks are deployed following a hierarchical model, mixing equipment from d
 \begin{figure*}
 	\centering
 		\includegraphics[scale=0.5]{figs/ifusion_multidomain_2.png}
-	\caption{Single multi-vendor IP SDN-C deployment}
+	\caption{Single multi-vendor IP SDN-C deployment. It includes potentially a unique controller for the entire domain, so it would be responsible all the IP devices in the netowork.}
 	\label{FIG:2}
 \end{figure*}
 
@@ -243,7 +243,7 @@ Without line-side interoperability of the different WDM transceivers and Reconfi
 
 With this in mind, in the short term, Optical SDN-C are expected to provide network programmability and interoperability towards upper layers (multi-layer) and between vendors (multi-domain, multi-vendor) through the support of standard NBIs (i.e. coordination will be provided by upper layer hierarchical SDTN). This short term approach will enable the setup and tear down of connections in optical channels (OCh and ODU layers), the discovery of the network resources to compose a layered uniform view based on the OTN hierarchy, and the monitoring of the optical network.
 
-The Hybrid SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has been already deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, beneficing the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) \cite{lopez2016transport} and IETF models \cite{wu2017service} are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
+The Hybrid SDN architecture proposed is compatible with a legacy control scenario where a distributed GMPLS control plane has already been deployed. GMPLS control plane can be centrally managed by a SDN domain controller by well-know and mature control protocols, such as PCEP, OSPF and/or BGP-LS already supported in GMPLS devices, beneficing the gradual introduction of SDN. However, current NMS solutions shall evolve to, or co-exist with, the SDN Controller model, enabling network programmability through its NBIs while keeping the current offered features for network creation, resources discovery and monitoring and service creation for L0/L1 layers. Standardization efforts targeting the definition of standard NBIs that can facilitate multi-vendor interoperability (by maintaining administrative domains for each vendor) such as ONF Transport API (T-API) \cite{lopez2016transport} and IETF models \cite{wu2017service} are the more promising definitions to implement such capabilities by abstracting the specific configuration of current distributed control planes embedded in Automatic Switched Optical Network (ASON) architectures. 
 i\uppercase{FUSION} relays on ONF Transport API 2.1 as as the reference NBI for the SDN implementation in the optical transport segment, having been experimented in several proof of concepts \cite{mayoral2016first,mayoral2017control,bravalheri2019vnf}. 
 
 In the medium and long term, the direct programmability of the components can have interest in Point-To-Point, Metro and Regional scenarios, where disaggregation of optical transceivers and line side components can play an important role. In this line, OpenROADM \cite{oda2016learning,kundrat2019opening} and OpenConfig \cite{shaikhopenconfig} projects have already defined device configuration models for transponders and open line systems. Telefonica is approaching this transformation of the optical control in two phases:
@@ -305,8 +305,8 @@ The L3NM model is used in this field trial as the data model  between the SDTN a
 
 \begin{figure*}
 	\centering
-		\includegraphics[scale=0.35]{figs/L3NM_L2NM.png}
-	\caption{L2NM and L3 Data models structure}
+		\includegraphics[scale=0.5]{figs/L3NM_L2NM.png}
+	\caption{L2NM and L3 Data models structures. Each circle represents a container in the YANG model. The blue lines represents references between the containers.}
 	\label{FIG:l3nm} 
 \end{figure*}
 
@@ -351,7 +351,7 @@ In this section the reference standard model use for the control/management of n
 
 \begin{figure*}
 	\centering
-		\includegraphics[scale=0.8]{figs/ONF-T-API.png}
+		\includegraphics[scale=0.75]{figs/ONF-T-API.png}
 	\caption{Multi-layer topology and connectivity models based on ONF T-API}
 	\label{FIG:ONF-T-API}
 \end{figure*}
@@ -645,7 +645,7 @@ The workflow between the SDTN and the IP Controller has been summarized in the U
 Aiming to demonstrate the multi-domain/multi-vendor capabilities of the SDTN solution, a scenario for an L3VPN service configuration was proposed. The main goal was to create a L3VPN between two access routers, each of them located in different IP domains. The IP domains are connected using a DWDM optical network. Depicted in \cref{FIG:field_trial_optical}. The L3VPN service was created using the SDTN GUI and the configuration parameters used for this matter are shown on Table \cref{TAB:discovered_ip_l3vpn}.
 
 \begin{table*}[]
-\caption{Configuration Parameters for L3VPN}
+\caption{Configuration Parameters for the testing of the L3VPN}
 \begin{adjustbox}{width=0.5\textwidth}
 \small
 \begin{tabular}{lll}
