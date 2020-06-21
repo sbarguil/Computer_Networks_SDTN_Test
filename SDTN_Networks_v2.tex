@@ -457,12 +457,21 @@ In that sense, the scope of this work includes two domains within the same IP/MP
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/l3vpn_workflow.png}
+		\includegraphics[width=\linewidth]{figs/l3vpn_workflow_3.png}
 	\caption{Messages Interchanged for IP multi-domain L3VPN service creation.}
 	\label{FIG:l3vpn_workflow}
 \end{figure}
 
-\Cref{FIG:l3vpn_workflow} depicts the workflow used by the SDTN to create (1) and retrieve (2)  the services on the IP SDNc. Each creation (POST) operation is complemented by the retrieval (GET) operation with their corresponding RESTCONF paths. 
+\Cref{FIG:l3vpn_workflow} depicts the workflow used by the SDTN to create and retrieve the services on the IP SDNc. Each creation block represents a set of  creation (POST) and retriveal (GET) operations. The five blocks of requests depicted corresponds to: 
+
+\begin{enumerate}
+    \item Site creation (SITE): The two sites must be created on the SDN-C
+    \item Site Bearer Creation (BEARER): Used to link the NE-ID and the Port-Id with the service.
+    \item Service Creation (VPN-SERVICE). The identifier of the service (VPN-ID) and the Virtual Circuit Identifier \texttt{VC-ID} to be negotiated by the ends is provided.  
+    \item VRF Node Creation (VPN-NODE). In this step the VRF is assigned to the NE.
+    \item Site Network Access Creation (SITE-NET-ACCESS). In this step all the data previously created is merged into a working L2VPN service to be deployed by the SDN-C on the devices using NETCONF.
+\end{enumerate}
+The specific RESTCONF path used in each call is also included.
 
 %\begin{figure}
 %	\centering
