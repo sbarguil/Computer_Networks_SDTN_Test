@@ -169,7 +169,7 @@ There is not a single method to facilitate the construction of SDN in carrier-gr
 \begin{itemize}
     \item Coexistence: Refers to the heterogeneity in the infrastructure. It can be in the data plane (legacy and the SDN-ready devices), the control plane (NMS vs SDN Controllers), or both. 
     \item Communication: Conveys the idea of full integration among various components of the network.
-    \item Crossbreeding: Mainly indicates the degree of hybridization-based on architectural trade-offs, for example, costs of transition, incremental installations, easy of automation, among others. 
+    \item Crossbreeding: Mainly indicates the degree of hybridization-based on architectural trade-offs. For example: costs of transition, incremental installations or how easy is the automation. 
 \end{itemize}
 
 To surpassing these challenges, several conceptual architectures have been proposed \cite{vissicchio2014opportunities,vissicchio2017safe}. Some of them are part of industrial definitions created within the consensus of standardization entities \cite{lee2015requirements}, and the services providers themselves have created others. One of the most promising reference model is the \uppercase{iFUSION} architecture \cite{contreras2019ifusion}. iFUSION is based on the "controller-only" definition of \cite{sinha2017survey} to support network automation and programmability in a service provider environment. The i\uppercase{FUSION} main principles include the use of:
@@ -433,7 +433,8 @@ Moreover, the Media Channel layer represents the available resources for the res
 
 \section{Use Cases Definition}
 \label{sec:usecasesdef}
-Based on the service models described previously in \cref{section:models} and using the the Hybrid-SDN appriach based on the iFusion architecture (\cref{section:arq}), a set of use cases were defined for testing: 
+As we have depicted previously, there are several requirements for network automation in the service providers. However, not all the requirements can be treated in the same way. Thus, based on the service models, the network APIs and using the Hybrid-SDN approach of the iFusion architecture, a set of four use cases were defined for testing:
+
 \begin{itemize}
     \item Multi-domain: IP L3VPN provisioning
     \item Multi-layer: Topology Discovery \& Visualization
@@ -441,17 +442,17 @@ Based on the service models described previously in \cref{section:models} and us
     \item Optical provisioning
 \end{itemize}
 
-The details covered on each of the use cases are described in the following subsections:
+The aim of these use cases is to validate if the automation of service provision and topology collection is feasible involving the Optical and IP/MPLS layers isolated or as part of the same creation process. The details covered on each of the use cases are described in the following subsections:
 
-\subsection{Multi-domain IP L3VPN provisioning}
+\subsection{Multi-domain: IP L3VPN provisioning}
 \label{section:muli-l3nm}
 
-As described previously in the \cref{section:l3nm}, the L3VPN services are not exclusive of single domain implementation. Multi-domain IP L3VPN is a common requirement in service providers. As the reality of service provider networks implies the coexistence of multiple AS, multiple IGPs, or multiple vendor network segmentation. Additionally, even if the iFusion architecture depicted in \ref{FIG:1} defines only one controller for the entire IP network, the lack of common models support on the network layer derives in the requirement to temporally expand it to support several IP-SDNcs. So, in this use case the service provisioning process requires a set of interactions between the SDTN and more than one IP SDN-C.
+As described previously in the \cref{section:l3nm}, the L3VPN services are not exclusive of single domain implementation. Multidomain IP L3VPN is a common requirement in service providers. Mainly, due to the coexistence of multiple AS or multiple IGPs running on the network. The iFusion architecture depicted in \ref{FIG:1} defines only one controller for the entire IP network. However, the lack of support of common device models (OpenConfig) in the network layer, derived in the requirement to temporally expand the number of IP controllers one by each vendor/domain. So, in this use case, the service provisioning process requires coordination between the SDTN and the IP SDN controllers to correctly delegate the resources between domains.
 
-In that sense, the scope of this work includes two domains within the same IP/MPLS network. Each domain is controlled by an independent SDN-C \ref{FIG:field_trial_ip}. Each controller has implemented the IETF L3NM model described in subsection \cref{section:l3nm}. So at the end, the goal of this use case is to prove the SDTN capacity to:
+In that sense, the scope of this work includes two domains within the same IP/MPLS network. Each domain is controlled by an independent IP-SDNc \ref{FIG:field_trial_ip}. Each controller has implemented the IETF L3NM model described in subsection \cref{section:l3nm}. So at the end, the goal of this use case is to prove the SDTN capacity to:
 \begin{itemize}
-    \item \textbf{Create}, \textbf{Modify} and \textbf{Delete}: Delegate the required provision parameters to each controller in order to Create services in an operative multidomain IP/MPLS network.
-    \item \textbf{Retrieval}: Get the service information from each controller and expose the services with an unified view of it.
+    \item \textbf{Create}, \textbf{Modify} and \textbf{Delete}: Delegate the required provision parameters to each controller in order to operate services in an multidomain IP/MPLS network.
+    \item \textbf{Retrieval}: Get the services information from each controller and expose the services with an unified view of it.
 \end{itemize}
 
 \begin{figure}
@@ -461,15 +462,7 @@ In that sense, the scope of this work includes two domains within the same IP/MP
 	\label{FIG:l3vpn_workflow}
 \end{figure}
 
-The information exchanged between the SDTN and the IP-SDNc is limited by the YANG data model definitions. Thus, as depicted in \cref{FIG:l3nm}a each of the containers of the L3NM must be implemented in the control element to support the specific RESTCONF operation. Specific and standard RESTCONF paths must be supported too. In that sense, the following four steps are needed to provision a multi-domain L3VPN service:
-\begin{enumerate}
-    \item Create Site: Defines customer location
-    \item Create Bearer: Defines the interfaces assigned to the customer in the PE.
-    \item Create VPN-Node: The Network Instance parameters of the service and PE general information.  
-    \item Create Site-Network-Access: Assign the Interface and Ethernet encapsulation parameters in the Network side. 
-\end{enumerate}
-
-\Cref{FIG:l3vpn_workflow} depicts the workflow used by the SDTN to create the services on the IP SDN-Cs. Each creation (POST) operation is complemented by the retrieval (GET) operation with their corresponding RESTCONF paths. 
+\Cref{FIG:l3vpn_workflow} depicts the workflow used by the SDTN to create (1) and retrieve (2)  the services on the IP SDNc. Each creation (POST) operation is complemented by the retrieval (GET) operation with their corresponding RESTCONF paths. 
 
 %\begin{figure}
 %	\centering
@@ -480,26 +473,17 @@ The information exchanged between the SDTN and the IP-SDNc is limited by the YAN
 
 \subsection{Multi-layer Topology Discovery \& Visualization}
 
-The multi-layer topology use case is based on the data provided by all the \hyperref[subsection:IPtopo]{IP} and \hyperref[subsection:OPTopo]{Optical} SDN-Cs. The scope of it includes the composition of multiple sources and data formats (i.e., IETF context for IP or T-API context for Optical) to create a common view of the network. The models used to create the multi-layer topology are:
+The multi-layer topology use case was designed to create a common view of the network. So the SDTN would be allowed to expose a common and abstract view of the network, including IP and Optical layers. Thus, the accomplishment of this use case is fully dependent on the reliability of the information exposed by each of the \hyperref[subsection:IPtopo]{IP} and \hyperref[subsection:OPTopo]{Optical} SDNc. Additionally, the SDTN must deal with the data normalization to create the relationship between layers. 
+
+The models used to create the multi-layer topology was:
 \begin{itemize}
-    \item For the IP/MPLS domain representation: The IETF\\ \texttt{ietf-network:networks} is the basis to expose the network model (nodes and IP Links) and the \\ \texttt{.../node/nt:termination-point} are used to expose the Termination points (Ports) of a specific node.
+    \item For the IP/MPLS domain representation: The IETF \texttt{ietf-network} is the basis to expose the IP/MPLS network (nodes and L3 Links) and the \texttt{ietf-network-topology} is used to expose the termination points (Ports) of a specific node.
     \item For the optical domain representation: Topology and Connectivity Service modules. These models provide information for layers from L0 to L2.
 \end{itemize}
     
-Additionally, a correlation parameter is defined to join the IP and Optical layers. We have denoted this parameter as the \texttt{Plug-id}. This additional definition is needed due to there being no dynamic protocol or common element between the ONF/IETF standards that would allow their direct correlation. The \texttt{Plug-id} parameter is added in the IETF termination points and in the T-API connectivity services. 
+Nowadays, there is not a common element between the T-API-IETF standards that would allow their correlation. So, a correlation parameter was defined to join the IP and optical layers. The parameter was \texttt{Plug-id}. This parameter was defined as a mandatory requirement in the implementations.  Thus, the \texttt{Plug-id} was added as a YANG augmentation in the IETF \texttt{ietf-network-topology}. \texttt{Plug-id} already exists in T-API connectivity services data models. 
 
-It is necessary to remark that in the T-API model, the \texttt{Plug-id} parameter is a "String," while in the IETF model it is "Binary;" therefore the SDTN MUST have the ability to translate the “Binary” value to “String” or vice versa to be able to make the match in the correlation process considered to be standardized.
-
-The \texttt{Plug-id} can be an inventory parameter. To fill the \texttt{Plug-id} attribute automatically between the layers, it is required that the SDTN performs a process based on meta-heuristic algorithms in which the performance data at a termination-points level, both in the IP and Optical layers, will be correlated. Clock \& Time must be perfectly synchronized between the Tx/Rx points bidirectionally. Meta-heuristics must include the geo-location parameter of the nodes as input. However, the design of this process is currently under study and is based on real-time information that can be delivered by the telemetry engines.
-
-\begin{figure}
-	\centering
-		\includegraphics[width=\linewidth]{figs/ip_topology_workflow.png}
-	\caption{Messages Interchanged for IP Topology Discovery between the SDTN and IP SDN-C}
-	\label{FIG:ip_topology_workflow}
-\end{figure}
-
-Starting with the optical domain, a set of T-API version 2.1 queries were sent in order to build the topology by extracting the list of networks as well as topology details such as nodes, links, connections and service interface points available. The query exchange process is shown in the UML diagram depicted in \cref{FIG:optical_topology_workflow}.  
+It is necessary to remark that in the T-API model, the \texttt{Plug-id} parameter is a "String," while in the IETF model it was defined as "Binary". Therefore the SDTN would normalize the values received by each layer to make build the common topology.
 
 \begin{figure}
 	\centering
@@ -508,8 +492,19 @@ Starting with the optical domain, a set of T-API version 2.1 queries were sent i
 	\label{FIG:optical_topology_workflow}
 \end{figure}
 
-Regarding the IP domain, to obtain the whole network topology, a query to the controller’s NBI to retrieve the IP layer is sent; from here on, the client must perform queries to get more detailed information such as nodes, termination points of nodes, links, etc. \Cref{FIG:ip_topology_workflow} displays the RESTCONF-based queries in UML format for the topology retrieval in the IP domain. 
-At this point, no inter-domain links were retrieved since there is no automatic mechanism supported on the domain controllers to expose information such as TTI (on the optical domain), LLDP (on the IP domain) or \texttt{Plug-id} (for both domains); therefore \texttt{Plug-id} based link discovery was simulated by adding user-defined \texttt{Plug-id} values to each port or at least to each domain edge port manually with the use of Python scripting. The plug-id data was automatically detected by the SDTN and the inter-domain links between ports with matching \texttt{Plug-ids} were created, resulting in a complete multi-layer/multi-domain end-to-end topology as seen from the SDTN GUI.
+\begin{figure}
+	\centering
+		\includegraphics[width=\linewidth]{figs/ip_topology_workflow.png}
+	\caption{Messages Interchanged for IP Topology Discovery between the SDTN and IP SDN-C}
+	\label{FIG:ip_topology_workflow}
+\end{figure}
+
+The process to collect the information for the optical domain is shown in the \cref{FIG:optical_topology_workflow}. This diagram depicts the set of queries exchanged between the SDTN and the SDNc. As depicted, the information is extracted in a hierarchical way, starting from the more general information: i.e. the list of networks.  Recursively the information of each network is complemented with nodes, links, connections and service interface points. 
+
+Regarding the IP domain, the process to obtain the whole network topology requires a hierarchical and iterative approach as the previously described; Firts, the network information is collected, from here a set of queries to get more detailed information such as nodes, termination points and  links are requiered. \Cref{FIG:ip_topology_workflow} displays the RESTCONF-based queries in UML format for the topology retrieval in the IP domain. 
+
+
+Since there is no automatic mechanism supported on the domain controllers to expose information such as Trail Trace Identifier (TTI) on the optical domain or LLDP neighbors on the IP domain. At this point, all the information exposed by the domain controllers does not include any inter-domain link. Therefore, the \texttt{Plug-id} based link discovery was simulated. The simulation was done by adding user-defined \texttt{Plug-id} values to each port with a Python script. So, once the SDTN receives the topology information complemented with the plug-id, The SDTN is able to automatically create the inter-domain links between nodes.
 
 %\begin{figure}
 %	\centering
@@ -535,28 +530,25 @@ At this point, no inter-domain links were retrieved since there is no automatic 
 \subsection{IP L2VPN provisioning}
 \label{section:single-l2nm}
 
-The L2VPN services are not exclusive of single domain implementations however due to implementation limitations in one of the SDN controller just the single domain L2VPN creation was tested. As described previously, in \cref{section:l2nm} in order to create the L2VPN service of the containers (SITE, VPN SERVICE) must be created using the the following operations:
-
-\begin{enumerate}
-    \item Site creation. The two sites must be created on the SDN-C. Parameters such as \texttt{site-id} and \texttt{location-id}  must be provided.
-    \item Service Creation (VPN-SERVICE). The identifier of the service (VPN-ID) and the Virtual Circuit Identifier \texttt{VC-ID} to be negotiated by the ends is provided.  
-    \item Site Network Access Creation (SITE-NET-ACCESS). In this step all the data previously created is merged into a working L2VPN service to be deployed by the SDN-C on the devices using NETCONF. The configuration parameters needed on the body request for the SITE-NET-ACCESS creation includes: 
-    \begin{itemize}
-        \item \texttt{site-id}: Reference to customer site.
-        \item \texttt{bearer-id}: Netowrk Interface used in the service.
-        \item \texttt{vpn-id}: Reference to the VPN-SERVICE.
-        \item IP connectivity, QoS management or Ethernet encapsulation
-    \end{itemize}
-\end{enumerate}
+A single domain L2VPN creation was tested using the L2SM described in \ref{section:l2nm}. In this use case a single domain controller were involved, so the creation process does not requiere the SDTN resources coordination.  in order to create the L2VPN service of the containers (SITE, VPN SERVICE) must be created using the the following operations:
 
 \begin{figure}
 	\centering
-		\includegraphics[width=\linewidth]{figs/l2sm_workflow_2.png}
+		\includegraphics[width=\linewidth]{figs/l2sm_workflow_3.png}
 	\caption{Messages Interchanged for L2VPN Provisioning between the SDTN and the IP SDN-C}
 	\label{FIG:L2SM_workflow}
 \end{figure}
 
-The workflow between the SDTN and the IP controller has been summarized in the UML model presented on \cref{FIG:L2SM_workflow}. The four POST requests described previously, and their equivalent retrieval (GET) requests exchanged between the SDTN and the IP controller are included.
+The workflow between the SDTN and the IP controller has been summarized on \cref{FIG:L2SM_workflow}. The four creation requests corresponds to: 
+
+\begin{enumerate}
+    \item Site creation (SITE): The two sites must be created on the SDN-C
+    \item Site Bearer Creation (BEARER): Used to link the NE-ID and the Port-Id with the service.
+    \item Service Creation (VPN-SERVICE). The identifier of the service (VPN-ID) and the Virtual Circuit Identifier \texttt{VC-ID} to be negotiated by the ends is provided.  
+    \item Site Network Access Creation (SITE-NET-ACCESS). In this step all the data previously created is merged into a working L2VPN service to be deployed by the SDN-C on the devices using NETCONF.
+\end{enumerate}
+
+Their equivalent retrieval (GET) operations exchanged between the SDTN and the IP controller are also included in the diagram below each of the POST.
 
 \subsection{Optical Provision}
 \label{section:optical_provision}
