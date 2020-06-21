@@ -530,7 +530,7 @@ Since there is no automatic mechanism supported on the domain controllers to exp
 \subsection{IP L2VPN provisioning}
 \label{section:single-l2nm}
 
-A single domain L2VPN creation was tested using the L2SM described in \ref{section:l2nm}. In this use case a single domain controller were involved, so the creation process does not requiere the SDTN resources coordination.  in order to create the L2VPN service of the containers (SITE, VPN SERVICE) must be created using the the following operations:
+A single domain L2VPN creation was tested using the L2SM described in \ref{section:l2nm}. In this use case a single domain controller were involved, so the creation process does not require the SDTN resources coordination.  
 
 \begin{figure}
 	\centering
@@ -539,7 +539,7 @@ A single domain L2VPN creation was tested using the L2SM described in \ref{secti
 	\label{FIG:L2SM_workflow}
 \end{figure}
 
-The workflow between the SDTN and the IP controller has been summarized on \cref{FIG:L2SM_workflow}. The four creation requests corresponds to: 
+The workflow between the SDTN and the IP controller has been summarized on \cref{FIG:L2SM_workflow}. The four blocks of requests depicted corresponds to: 
 
 \begin{enumerate}
     \item Site creation (SITE): The two sites must be created on the SDN-C
@@ -552,6 +552,12 @@ Their equivalent retrieval (GET) operations exchanged between the SDTN and the I
 
 \subsection{Optical Provision}
 \label{section:optical_provision}
+
+This use case defines a pure optical layer provision. This use case requires the SDTN coordination to fully create the path between devices in the optical layer. The use case considers, the creation of an “unconstrained” connectivity-service between Service-Interface-Points at the DSR, ODU or PHOTONIC\_MEDIA layers and the retrieval of the generated connections information.
+
+In this case, the path of each lower layer connection (e.g., ODU or OCh/OTSi, OMS) across the network topology is calculated independently by the controller, and the connection automatically provisioned and after reported to the SDTN. 
+
+The “unconstrained” term refers that the SDTN is not allowed to introduce any routing or topology constraint in the service request, thus relays completely into the routing capabilities of the SDN controller to select the network resources employed to provide the desired service characteristics.
 
 \section{Field Trial Environment for iFusion SDTN Demonstration}
 \label{section:trial}
